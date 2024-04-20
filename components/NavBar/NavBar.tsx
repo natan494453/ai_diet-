@@ -1,14 +1,8 @@
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 export default function NavBar() {
   return (
-    <div className="navbar bg-base-300 px-20">
+    <div className="navbar bg-base-300 lg:px-20">
       <div className="flex-1">
         <Link href={"/"}>
           <p className="btn btn-ghost text-xl">דיאטה AI</p>

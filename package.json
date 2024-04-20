@@ -11,9 +11,11 @@
   "dependencies": {
     "@clerk/localizations": "^2.0.0",
     "@clerk/nextjs": "^5.0.0-beta.46",
+    "@prisma/client": "^5.12.1",
     "next": "14.2.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "svix": "^1.21.0"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -23,6 +25,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "postcss": "^8",
+    "prisma": "^5.12.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
