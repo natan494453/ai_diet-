@@ -9,7 +9,7 @@ export const runtime = "edge";
 export async function POST(req: Request) {
   // Extract the `prompt` from the body of the request
   const { prompt } = await req.json();
-
+  //test
   const recipe = `
     if you dont see here : [${prompt}] food ingredients so you will say that you can answer!
     else:
