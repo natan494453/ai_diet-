@@ -62,19 +62,21 @@ export async function POST(req: Request) {
     if (!user) {
       const newUser = await prisma.user.create({
         data: {
+          id: attributes.email_addresses[0].id,
           email: attributes.email_addresses[0].email_address,
           method:
             attributes.external_accounts[0].provider ||
             attributes.external_accounts[0].object,
           name:
-            attributes.username || attributes.external_accounts[0].given_name,
+            attributes.username ||
+            attributes.external_accounts[0].given_name ||
+            attributes.external_accounts[0].first_name,
         },
       });
     }
   }
-  //   console.log(id);
-  //   console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-  //   console.log("Webhook body:", body);
-
+  if (eventType === "session.created") {
+    console.log(attributes);
+  }
   return new Response("", { status: 200 });
 }

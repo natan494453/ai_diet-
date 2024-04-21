@@ -1,13 +1,13 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, StreamingTextResponse } from "ai";
-
+import prisma from "@/db/connect";
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
 // IMPORTANT! Set the runtime to edge
 
 export async function POST(req: Request) {
-  // Extract the `prompt` from the body of the request
-  const { prompt } = await req.json();
+  const { prompt, userMail } = await req.json();
+
   //test
   const recipe = `
     if you dont see here : [${prompt}] food ingredients or a question about foor so you will say that you can answer!
@@ -41,7 +41,25 @@ export async function POST(req: Request) {
     });
 
   // Convert the response into a friendly text-stream
-  const stream = GoogleGenerativeAIStream(response);
+  const stream = GoogleGenerativeAIStream(response, {
+    onCompletion: async (completion: string) => {
+      const regex = /<h1>(.*?)<\/h1>/;
+      const match = completion.match(regex);
+      const recipeName = match ? match[1] : "error";
+      const indexOf = completion.indexOf(":");
+      const recippe = completion.substring(indexOf + 2, completion.length);
+
+      if (completion.length > 400) {
+        const recipe = await prisma.recipe.create({
+          data: {
+            title: recipeName,
+            userId: userMail,
+            recipe: recippe,
+          },
+        });
+      }
+    },
+  });
 
   // Respond with the stream
   return new StreamingTextResponse(stream);

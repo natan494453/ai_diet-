@@ -10,7 +10,7 @@ export default function Stats() {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
   return (
-    <div className="stats shadow  w-screen">
+    <div className="stats shadow  w-[99vw]">
       <div className="flex items-center justify-around">
         <div className="text-secondary">
           <div className="avatar online">

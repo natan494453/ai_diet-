@@ -2,7 +2,16 @@
 import { useCompletion } from "ai/react";
 import React from "react";
 import DOMPurify from "dompurify";
+import Clerk, { useUser } from "@clerk/clerk-react";
+import { useState, useEffect } from "react";
+//idn_2fPqJPpopuPSXXV6O3i03b5TKam
 export default function Chat() {
+  const { user, isLoaded } = useUser();
+  const [userMail, setUserImg] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (user) setUserImg(user.primaryEmailAddress?.id);
+  }, [user]);
+
   const {
     completion,
     input,
@@ -10,8 +19,7 @@ export default function Chat() {
     isLoading,
     handleInputChange,
     handleSubmit,
-  } = useCompletion();
-
+  } = useCompletion({ body: { userMail: userMail } });
   const sentaized = DOMPurify?.sanitize(completion);
   return (
     <div className=" border-b-2 border-[#f1f1f15b] flex justify-center pb-4 mt-10 ">

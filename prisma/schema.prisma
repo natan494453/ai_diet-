@@ -10,9 +10,18 @@ datasource db {
 }
 
 model User{
-  id    Int     @id @default(autoincrement())
-  email String  @unique
+  id    String     @id 
+  email String  
   name  String
   method String
   createdAt          DateTime  @default(now()) @db.Timestamp(3)
+  recipes Recipe[]
 }
+model Recipe{
+  id        Int      @id @default(autoincrement())
+  title String
+  createdAt          DateTime  @default(now()) @db.Timestamp(3)
+  user       User      @relation(fields: [userId], references: [id])
+  userId String
+  recipe String
+} 

@@ -2,7 +2,7 @@ import ChatHero from "@/components/ChatHero/ChatHero";
 import Link from "next/link";
 export default function Hero() {
   return (
-    <div className=" he ">
+    <div className=" ">
       <div className=" flex justify-center flex-col items-center  text-9xl font-bold mt-20 max-lg:text-2xl">
         <h2 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text">
           המתכון המשולם בעזרת
