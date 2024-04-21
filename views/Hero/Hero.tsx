@@ -1,4 +1,5 @@
 import ChatHero from "@/components/ChatHero/ChatHero";
+import Link from "next/link";
 export default function Hero() {
   return (
     <div className=" he ">
@@ -9,6 +10,13 @@ export default function Hero() {
         <h3 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text">
           AI
         </h3>
+        <Link href={"/dashboard"}>
+          <button className="btn btn-neutral text-2xl mt-10">
+            <span className="text-white font-bold tracking-wider">
+              נסה עכשיו
+            </span>
+          </button>
+        </Link>
       </div>
       <ChatHero />
     </div>
