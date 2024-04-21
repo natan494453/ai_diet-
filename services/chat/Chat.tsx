@@ -14,31 +14,40 @@ export default function Chat() {
 
   const sentaized = DOMPurify?.sanitize(completion);
   return (
-    <div className=" border-b-2 border-[#f1f1f15b] ">
-      <div className="mx-auto  max-w-md py-16 flex flex-col stretch  ">
+    <div className=" border-b-2 border-[#f1f1f15b] flex justify-center pb-4 mt-10 ">
+      <div className="    flex flex-col w-[80%]  ">
         <form onSubmit={handleSubmit}>
           <div
             className="chat-bubble"
             dangerouslySetInnerHTML={{ __html: sentaized }}
           ></div>
 
-          <div className=" flex items-center justify-center gap-10 mt-10 ">
+          <div className=" flex  justify-center gap-7 mt-10 flex-col  w-[80vw]">
             <input
-              className=" w-full max-w-md   border border-gray-300 rounded-xl  shadow-xl p-2"
+              className="   border border-gray-300 rounded-xl  shadow-xl p-4"
               value={input}
+              placeholder=" כתוב שאלה על אוכל או מצרכים"
               onChange={handleInputChange}
             />
-            <div className="flex gap-6">
-              <button
-                className="btn btn-accent"
-                disabled={isLoading}
-                type="submit"
-              >
-                שלח
-              </button>
-              <button className=" btn btn-warning" type="button" onClick={stop}>
-                עצור
-              </button>
+            <div className="flex justify-center gap-10  ">
+              <div>
+                <button
+                  className=" btn btn-accent px-16 text-xl "
+                  disabled={isLoading}
+                  type="submit"
+                >
+                  שלח
+                </button>
+              </div>
+              <div>
+                <button
+                  className=" btn btn-warning px-16 text-xl"
+                  type="button"
+                  onClick={stop}
+                >
+                  עצור
+                </button>
+              </div>
             </div>
           </div>
         </form>

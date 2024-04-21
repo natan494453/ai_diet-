@@ -10,18 +10,18 @@ export async function POST(req: Request) {
   const { prompt } = await req.json();
   //test
   const recipe = `
-    if you dont see here : [${prompt}] food ingredients so you will say that you can answer!
+    if you dont see here : [${prompt}] food ingredients or a question about foor so you will say that you can answer!
     else:
     i need you to write a recipe with this ingredients ${prompt}
     in this format:
-    <h1>recipe name : pancakes</h1> 
+    <h1>recipe name : recipe name</h1> 
     <br/>
     <br/>
     ingredients :
     <br/>
-    ingredient 1: eggs
+    ingredient 1: ingredient 1
     <br/>
-    ingredient 2: eggs
+    ingredient 2: ingredient 2
     <br/>
     <br/>
     instructions :
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
     2. instructions  2 
     all in hebrew
     and in html
+    i need exact measurements and portion sizes
   `;
   // Ask Google Generative AI for a streaming completion given the prompt
   const response = await genAI
