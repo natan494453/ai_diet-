@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
 export async function POST(req: Request) {
   const { prompt, userMail } = await req.json();
-
+  console.log(userMail);
   //test
   const recipe = `
     if you dont see here : [${prompt}] food ingredients or a question about foor so you will say that you can answer!

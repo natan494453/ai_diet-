@@ -26,7 +26,7 @@ export default async function page() {
         <Chat />
       </div>{" "}
       <div className="border-b-2 border-[#f1f1f15b]">
-        <Accordion data={data} />
+        <Accordion dataa={data} />
       </div>
     </div>
   );

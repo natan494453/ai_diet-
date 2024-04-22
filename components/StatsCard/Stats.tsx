@@ -2,15 +2,48 @@
 interface props {
   count: number;
 }
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/lib/store";
+
 import Clerk, { useUser } from "@clerk/clerk-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 export default function Stats({ count }: props) {
+  const data = useSelector((state: RootState) => state.fetchStates.value);
+
   const { user, isLoaded } = useUser();
   const [userImg, setUserImg] = useState<string | undefined>(undefined);
+  const [countState, SetCount] = useState(count);
+  useEffect(() => {
+    if (user) setUserImg(user.imageUrl);
+  }, [user]);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      const getNewCount = async () => {
+        try {
+          if (user && user.primaryEmailAddressId) {
+            const newCount = await axios.get(
+              `/api/getCount/${user.primaryEmailAddressId}`
+            );
+            SetCount(newCount.data.newCount);
+          }
+        } catch (error) {
+          console.error("Error fetching new count:", error);
+        }
+      };
+
+      getNewCount();
+    } else {
+      isFirstRender.current = false;
+    }
+  }, [data, user]); // Adding 'user' as a dependency for the effect
 
   useEffect(() => {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
+
   return (
     <div className="stats shadow  w-[99vw] max-lg:mt-2">
       <div className="flex items-center justify-around">
@@ -22,7 +55,7 @@ export default function Stats({ count }: props) {
           </div>
         </div>{" "}
         <div>
-          <div className="stat-value">{count}</div>{" "}
+          <div className="stat-value">{countState}</div>{" "}
           <div className="stat-desc text-secondary">מתכונים שנוצרו </div>
         </div>
       </div>
