@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/lib/store";
 
 import Clerk, { useUser } from "@clerk/clerk-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 export default function Stats({ count }: props) {
   const data = useSelector((state: RootState) => state.fetchStates.value);
 
@@ -18,7 +18,7 @@ export default function Stats({ count }: props) {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
   const isFirstRender = useRef(true);
-
+  console.log(countState);
   useEffect(() => {
     if (!isFirstRender.current) {
       const getNewCount = async () => {
@@ -27,6 +27,7 @@ export default function Stats({ count }: props) {
             const newCount = await axios.get(
               `/api/getCount/${user.primaryEmailAddressId}`
             );
+
             SetCount(newCount.data.newCount);
           }
         } catch (error) {

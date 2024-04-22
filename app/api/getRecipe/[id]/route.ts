@@ -8,14 +8,10 @@ export const GET = async (
 ) => {
   const { params } = context;
 
-  const count = await prisma.recipe.aggregate({
-    _count: {
-      userId: true,
-    },
-    where: {
-      userId: params.id,
-    },
+  const data = await prisma.recipe.findMany({
+    where: { userId: params.id },
+    orderBy: { createdAt: "desc" },
   });
-  console.log(count);
-  return NextResponse.json({ newCount: count._count.userId }, { status: 200 });
+
+  return NextResponse.json({ newData: data }, { status: 200 });
 };

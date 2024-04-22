@@ -10,6 +10,7 @@ export default async function page() {
 
   const data = await prisma.recipe.findMany({
     where: { userId: user?.emailAddresses[0].id },
+    orderBy: { createdAt: "desc" },
   });
   const count = await prisma.recipe.aggregate({
     _count: {

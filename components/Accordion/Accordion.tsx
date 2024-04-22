@@ -2,6 +2,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Modal } from "../delRecipe/Modal";
 import { useModal } from "@/hooks/useModal";
+import axios from "axios";
+import Clerk, { useUser } from "@clerk/clerk-react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/lib/store";
+
 interface dataProps {
   dataa: any;
 }
@@ -20,14 +25,39 @@ export default function Accordion({ dataa }: dataProps) {
       </>
     ),
   });
+  const dataGlobal = useSelector((state: RootState) => state.fetchStates.value);
 
+  const [fullData, setFullData] = useState(dataa);
+  const isFirstRender = useRef(true);
+  const { user, isLoaded } = useUser();
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      const getNewCount = async () => {
+        try {
+          if (user && user.primaryEmailAddressId) {
+            const newCount = await axios.get(
+              `/api/getRecipe/${user?.primaryEmailAddressId}`
+            );
+            setFullData(newCount.data.newData);
+          }
+        } catch (error) {
+          console.error("Error fetching new count:", error);
+        }
+      };
+
+      getNewCount();
+    } else {
+      isFirstRender.current = false;
+    }
+  }, [dataGlobal, user]); // Adding 'user' as a dependency for the effect
+  console.log(fullData);
   return (
     <div className="flex justify-center relative flex-col items-center gap-10">
       {modal}
 
       <h2 className="text-center text-4xl font-bold mt-5">המתכונים שלך</h2>
       <div className="flex flex-col gap-10 w-[80vw]">
-        {dataa.map((item: any, index: number) => {
+        {fullData.map((item: any, index: number) => {
           return (
             <div key={item.id} className="collapse bg-base-200">
               <input
