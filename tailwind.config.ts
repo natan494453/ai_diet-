@@ -9,6 +9,7 @@ const config: Config = {
     "./views/**/*.{js,ts,jsx,tsx,mdx}",
     "./services/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+
   theme: {
     extend: {
       backgroundImage: {
@@ -19,5 +20,6 @@ const config: Config = {
     },
   },
   plugins: [daisyui],
+  daisyui: { themes: ["dark"] },
 };
 export default config;

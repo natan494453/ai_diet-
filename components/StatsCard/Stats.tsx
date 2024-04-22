@@ -1,8 +1,10 @@
 "use client";
+interface props {
+  count: number;
+}
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-export default function Stats() {
+export default function Stats({ count }: props) {
   const { user, isLoaded } = useUser();
   const [userImg, setUserImg] = useState<string | undefined>(undefined);
 
@@ -10,7 +12,7 @@ export default function Stats() {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
   return (
-    <div className="stats shadow  w-[99vw]">
+    <div className="stats shadow  w-[99vw] max-lg:mt-2">
       <div className="flex items-center justify-around">
         <div className="text-secondary">
           <div className="avatar online">
@@ -20,12 +22,12 @@ export default function Stats() {
           </div>
         </div>{" "}
         <div>
-          <div className="stat-value">86</div>{" "}
+          <div className="stat-value">{count}</div>{" "}
           <div className="stat-desc text-secondary">מתכונים שנוצרו </div>
         </div>
       </div>
-      <div className="stat">
-        <div className="stat-figure text-primary">
+      <div className="stat max-lg:hidden">
+        <div className="stat-figure text-primary ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -45,7 +47,7 @@ export default function Stats() {
         <div className="stat-desc">21% more than last month</div>
       </div>
 
-      <div className="stat">
+      <div className="stat max-lg:hidden">
         <div className="stat-figure text-secondary">
           <svg
             xmlns="http://www.w3.org/2000/svg"

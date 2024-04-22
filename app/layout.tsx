@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider localization={heIL}>
-      <html lang="en" dir="rtl">
+      <html lang="en" dir="rtl" data-theme="dark">
         <body className={inter.className}>
           <NavBar />
           {children}
