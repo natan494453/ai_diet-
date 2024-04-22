@@ -10,7 +10,7 @@ export default function Hero() {
         <h3 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text">
           AI
         </h3>
-        <Link href={"/dashboard"}>
+        <Link href={"/sign-in"}>
           <button className="btn btn-neutral text-2xl mt-10">
             <span className="text-white font-bold tracking-wider">
               נסה עכשיו
