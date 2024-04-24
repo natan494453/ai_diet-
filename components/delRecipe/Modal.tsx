@@ -1,15 +1,17 @@
 import { forwardRef, ReactNode } from "react";
-
+import axios from "axios";
 export type ModalProps = {
   children?: ReactNode;
   onBackdropClick?: () => void;
   modalBoxClassName?: string;
   data?: string;
+  id?: any;
   // you can add more classNames as per your level of customisation needs
 };
 
 export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
-  ({ children, modalBoxClassName, onBackdropClick, data }, ref) => {
+  ({ children, modalBoxClassName, onBackdropClick, data, id }, ref) => {
+    console.log(id);
     return (
       <dialog ref={ref} className="modal">
         <div className={`modal-box ${modalBoxClassName ?? ""}`}>

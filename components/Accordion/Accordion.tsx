@@ -1,23 +1,41 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { Modal } from "../delRecipe/Modal";
 import { useModal } from "@/hooks/useModal";
 import axios from "axios";
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/lib/store";
+import { addRecipe } from "@/lib/features/fetchStates";
 
 interface dataProps {
   dataa: any;
 }
+
 export default function Accordion({ dataa }: dataProps) {
-  const { modal, openModal, closeModal, data } = useModal({
+  const deleteItem = async (id: number) => {
+    try {
+      if (user && user.primaryEmailAddressId && data) {
+        await axios.delete(`/api/delRecipe/`, {
+          data: {
+            data: id,
+          },
+        });
+        closeModal();
+        dispatch(addRecipe(null));
+      }
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+    }
+  };
+  const { modal, openModal, closeModal, data, id } = useModal({
     children: (
       <>
         <h1 className="text-2xl font-bold py-6">אתה בטוח שאתה רוצה לימחוק?</h1>
 
         <div className="flex items-center w-full gap-10">
-          <button className="btn btn-error">מחק</button>
+          <button className="btn btn-error" onClick={() => deleteItem(id)}>
+            מחק
+          </button>
           <button className="btn " onClick={() => closeModal()}>
             בטל
           </button>
@@ -26,10 +44,11 @@ export default function Accordion({ dataa }: dataProps) {
     ),
   });
   const dataGlobal = useSelector((state: RootState) => state.fetchStates.value);
-
+  const dispatch: AppDispatch = useDispatch();
   const [fullData, setFullData] = useState(dataa);
   const isFirstRender = useRef(true);
   const { user, isLoaded } = useUser();
+
   useEffect(() => {
     if (!isFirstRender.current) {
       const getNewCount = async () => {
@@ -50,7 +69,7 @@ export default function Accordion({ dataa }: dataProps) {
       isFirstRender.current = false;
     }
   }, [dataGlobal, user]); // Adding 'user' as a dependency for the effect
-  console.log(fullData);
+
   return (
     <div className="flex justify-center relative flex-col items-center gap-10">
       {modal}
@@ -73,7 +92,7 @@ export default function Accordion({ dataa }: dataProps) {
                 dangerouslySetInnerHTML={{ __html: item.recipe }}
               ></div>{" "}
               <button
-                onClick={() => openModal(item.title)}
+                onClick={() => openModal(item.title, item.id)}
                 className="collapse-content btn btn-error absolute pt-2 left-0 flex items-center justify-center"
               >
                 מחק

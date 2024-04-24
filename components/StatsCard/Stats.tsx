@@ -18,7 +18,6 @@ export default function Stats({ count }: props) {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
   const isFirstRender = useRef(true);
-  console.log(countState);
   useEffect(() => {
     if (!isFirstRender.current) {
       const getNewCount = async () => {

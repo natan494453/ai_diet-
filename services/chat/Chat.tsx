@@ -17,7 +17,8 @@ export default function Chat() {
   useEffect(() => {
     if (user) setUserImg(user.primaryEmailAddress?.id);
   }, [user]);
-
+  const [isOK, setIsok] = useState<boolean | null>(false);
+  const [isNotOK, setIsNotOK] = useState<boolean | null>(false);
   const {
     completion,
     input,
@@ -27,13 +28,48 @@ export default function Chat() {
     handleSubmit,
   } = useCompletion({
     body: { userMail: userMail },
+
     onFinish: () => {
       dispatch(addRecipe(null));
     },
   });
   const sentaized = DOMPurify?.sanitize(completion);
+
+  useEffect(() => {
+    if (!isLoading && completion.length > 350) {
+      setIsok(true);
+      setTimeout(() => {
+        setIsok(false);
+      }, 4000);
+    }
+    if (!isLoading && completion.length < 350 && completion) {
+      setIsNotOK(true);
+      setTimeout(() => {
+        setIsNotOK(false);
+      }, 4000);
+    }
+  }, [isLoading, completion]);
+
   return (
     <div className=" border-b-2 border-[#f1f1f15b] flex justify-center pb-4 mt-10 ">
+      <div
+        className={`toast toast-top toast-center z-40 duration-200  ${
+          isOK ? " opacity-1" : " opacity-0"
+        }`}
+      >
+        <div className="alert alert-success ">
+          <span className="text-2xl ">מתכון נוסף</span>
+        </div>
+      </div>{" "}
+      <div
+        className={`toast toast-top toast-center z-40 duration-200 ${
+          isNotOK ? " opacity-1" : " opacity-0"
+        }`}
+      >
+        <div className="alert alert-error">
+          <span className="text-2xl">מתכון לא נוסף</span>
+        </div>
+      </div>
       <div className="    flex flex-col w-[80%]  ">
         <form onSubmit={handleSubmit}>
           <div
@@ -44,8 +80,8 @@ export default function Chat() {
           <div className=" flex  justify-center gap-7 mt-10 flex-col  w-[80vw]">
             <input
               className="   border border-gray-300 rounded-xl  shadow-xl p-4"
-              value={input}
-              placeholder=" כתוב שאלה על אוכל או מצרכים"
+              value={isLoading ? "......." : input}
+              placeholder={isLoading ? "..." : " כתוב שאלה על אוכל או מצרכים"}
               onChange={handleInputChange}
             />
             <div className="flex justify-center gap-10  ">

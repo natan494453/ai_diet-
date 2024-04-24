@@ -16,6 +16,5 @@ export const GET = async (
       userId: params.id,
     },
   });
-  console.log(count);
   return NextResponse.json({ newCount: count._count.userId }, { status: 200 });
 };
