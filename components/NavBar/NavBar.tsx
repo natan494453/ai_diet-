@@ -27,10 +27,10 @@ export default function NavBar() {
                 <p>מועדפים</p>
               </Link>
             </div>
+            <Res />
           </SignedIn>
 
           <UserButton />
-          <Res />
         </div>
       </div>
     </div>
