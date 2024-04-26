@@ -21,7 +21,7 @@ export default async function page() {
     },
   });
   return (
-    <div className="max-lg:mt-[20%] lg:mt-[3.5%] ">
+    <div className=" ">
       <Stats count={count._count.userId} />
       <div className="border-b-2 border-[#f1f1f15b]">
         <Chat />
