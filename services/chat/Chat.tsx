@@ -1,7 +1,7 @@
 "use client";
 import { useCompletion } from "ai/react";
 import React from "react";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

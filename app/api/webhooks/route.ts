@@ -54,7 +54,6 @@ export async function POST(req: Request) {
   const { id, ...attributes } = evt.data;
   const eventType = evt.type;
   if (eventType === "user.created") {
-    console.log(attributes);
     const user = await prisma.user.findFirst({
       where: { email: attributes.email_addresses[0].email_address },
     });
@@ -75,8 +74,6 @@ export async function POST(req: Request) {
       });
     }
   }
-  if (eventType === "session.created") {
-    console.log(attributes);
-  }
+
   return new Response("", { status: 200 });
 }

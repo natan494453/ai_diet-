@@ -32,7 +32,6 @@ export default function ChatHeroMobile() {
 
   useEffect(() => {
     let i = 0;
-    console.log(width);
     const typingIntervalUser = setInterval(() => {
       if (i < userText.length - 1) {
         setTypedTextUser((prevTypedText) => prevTypedText + userText[i]);

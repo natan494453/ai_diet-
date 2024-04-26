@@ -9,9 +9,9 @@ export async function POST(req: Request) {
   const { prompt, userMail } = await req.json();
   //test
   const recipe = `
-    if you dont see here : [${prompt}] food ingredients or a question about fooג so you will say that you cant answer!
+    if you dont see here : [${prompt}] food ingredients or a question about food so you will say that you cant answer!
     else:
-    i need you to write a recipe with this ingredients ${prompt}
+    i need you to write a recipe with this ingredients ${prompt} or answer the question
     in this format:
     <h1>recipe name : recipe name</h1> 
     <br/>
