@@ -6,7 +6,6 @@ import Clerk, { useUser } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/lib/store";
 import { addRecipe } from "@/lib/features/fetchStates";
-
 interface dataProps {
   dataa: any;
 }

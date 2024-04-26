@@ -11,7 +11,6 @@ export type ModalProps = {
 
 export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
   ({ children, modalBoxClassName, onBackdropClick, data, id }, ref) => {
-    console.log(id);
     return (
       <dialog ref={ref} className="modal">
         <div className={`modal-box ${modalBoxClassName ?? ""}`}>

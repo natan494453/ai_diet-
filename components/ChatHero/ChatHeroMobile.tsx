@@ -1,16 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/lib/store";
-import { setWidthAndHeight } from "@/lib/features/windowSize";
-export default function ChatHero() {
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+export default function ChatHeroMobile() {
   const { width, height } = useSelector(
     (state: RootState) => state.WindowSizeStates
   );
   const [typedTextUser, setTypedTextUser] = useState("");
   const [typedTextAI, setTypedTextAI] = useState("");
   const userText = "בבצל,פסטה,רוטב עבגניות,גבינה";
-  const lastText = `ההנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
+  const lastText = `הנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
     מרכיבים:<br />
     250 גרם פסטה<br />
     1 בצל גדול , קצוץ<br />
@@ -20,7 +19,7 @@ export default function ChatHero() {
     כוס מים<br />
     כוס שמן זית<br />
     הוראות הכנה:<br />
-    1. בסיר עם מים ומלח, הביאו לרתיחה והוסיפו את הפסטה. בשלב זה, עשו זאת על פי ההוראות באריזה.<br />
+    1. בסיר עם מים ומלח, הביאו לרתיחה והוסיפו את.... הפסטה. בשלב זה, עשו זאת על פי ההוראות באריזה.<br />
     2. בסיר אחר, שטפו וקצצו את הבצל לקוביות קטנות.<br />
     3. בסיר אחר, שימו את השמן הזית והקפיצו את הבצל עד שיהפוך לשקוף ורך.<br />
     4. הוסיפו את רוטב העגבניות וערבבו היטב. אם הרוטב נראה יבש, הוסיפו מים קצת.<br />
@@ -42,19 +41,13 @@ export default function ChatHero() {
         clearInterval(typingIntervalUser);
         let j = 0;
         const typingIntervalAI = setInterval(() => {
-          if (j < lastText.length - 1) {
-            if (width) {
-              if (width < 600 && j === 50) {
-                clearInterval(typingIntervalAI); // Stop typing based on condition
-                return;
-              }
-            }
+          if (j < lastText.length / 2.8) {
             setTypedTextAI((prevTypedText) => prevTypedText + lastText[j]);
             j++;
           } else {
             clearInterval(typingIntervalAI);
           }
-        }, 20);
+        }, 40);
       }
     }, 50);
 
@@ -64,7 +57,7 @@ export default function ChatHero() {
   }, []);
 
   return (
-    <div className="flex justify-center mt-20 max-lg:hidden">
+    <div className="flex justify-center mt-20 lg:hidden ">
       <div className="lg:w-[50vw] bg-base-300 rounded-xl p-6 ">
         <div className="chat chat-start">
           <div className="chat-image avatar">

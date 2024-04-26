@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import fetchStates from "./features/fetchStates";
+import WindowSizeStates from "./features/windowSize";
 export const makeStore = () => {
   return configureStore({
-    reducer: { fetchStates },
+    reducer: { fetchStates, WindowSizeStates },
   });
 };
 

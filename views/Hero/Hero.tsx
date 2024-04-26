@@ -1,4 +1,5 @@
 import ChatHero from "@/components/ChatHero/ChatHero";
+import ChatHeroMobile from "@/components/ChatHero/ChatHeroMobile";
 import Link from "next/link";
 export default function Hero() {
   return (
@@ -19,6 +20,7 @@ export default function Hero() {
         </Link>
       </div>
       <ChatHero />
+      <ChatHeroMobile />
     </div>
   );
 }

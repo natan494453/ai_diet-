@@ -1,6 +1,8 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isDashboardRoute = createRouteMatcher(["/dashboard(.*)"]);
+const isFavoriteRoute = createRouteMatcher(["/favorite(.*)"]);
+
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 export default clerkMiddleware((auth, req) => {
@@ -8,7 +10,7 @@ export default clerkMiddleware((auth, req) => {
   if (isAdminRoute(req)) auth().protect({ role: "org:admin" });
 
   // Restrict dashboard routes to signed in users
-  if (isDashboardRoute(req)) auth().protect();
+  if (isDashboardRoute(req) || isFavoriteRoute(req)) auth().protect();
 });
 
 export const config = {
