@@ -7,14 +7,14 @@ interface cardProps {
 }
 export default function Card({ title, explain, img }: cardProps) {
   return (
-    <div className="card lg:w-96 bg-base-300 shadow-xl h-[550px] mt-10 block">
+    <div className="flex flex-col shadow-2xl items-center rounded-2xl lg:w-96 w-[94vw] bg-base-300 shadow-xl h-[550px] mt-10 ">
       <div className="card-body items-start justify-start">
         <h2 className="card-title">{title}</h2>
         <p>{explain}</p>
       </div>
       <figure className=" ">
         <Image
-          className=" h-[365px] rounded-lg  "
+          className=" h-[365px] rounded-2xl  "
           src={img}
           alt={title}
           width={370}
