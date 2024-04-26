@@ -5,7 +5,7 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
   try {
     const currentRecipe = await prisma.recipe.findFirst({
       where: {
-        id: 1,
+        id: id,
       },
     });
     if (!currentRecipe) {
