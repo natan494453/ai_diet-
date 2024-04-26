@@ -48,12 +48,13 @@ export async function POST(req: Request) {
       const indexOf = completion.indexOf(":");
       const recippe = completion.substring(indexOf + 2, completion.length);
 
-      if (completion.length > 400) {
+      if (completion.length > 150) {
         const recipe = await prisma.recipe.create({
           data: {
             title: recipeName,
             userId: userMail,
             recipe: recippe,
+            isFavorite: false,
           },
         });
       }

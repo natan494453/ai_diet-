@@ -64,7 +64,7 @@ export default function ChatHero() {
   }, []);
 
   return (
-    <div className="flex justify-center mt-20 max-lg:hidden">
+    <div className="flex justify-center mt-20 max-lg:hidden min-h-[570px]">
       <div className="lg:w-[50vw] bg-base-300 rounded-xl p-6 ">
         <div className="chat chat-start">
           <div className="chat-image avatar">

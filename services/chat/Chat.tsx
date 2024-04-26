@@ -36,13 +36,13 @@ export default function Chat() {
   const sentaized = DOMPurify?.sanitize(completion);
 
   useEffect(() => {
-    if (!isLoading && completion.length > 350) {
+    if (!isLoading && completion.length > 150) {
       setIsok(true);
       setTimeout(() => {
         setIsok(false);
       }, 4000);
     }
-    if (!isLoading && completion.length < 350 && completion) {
+    if (!isLoading && completion.length < 150 && completion) {
       setIsNotOK(true);
       setTimeout(() => {
         setIsNotOK(false);

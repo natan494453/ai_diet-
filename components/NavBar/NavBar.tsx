@@ -21,6 +21,9 @@ export default function NavBar() {
               <Link href={"/dashboard"}>
                 <p>מתכונים</p>
               </Link>
+              <Link href={"/fav"}>
+                <p>מועדפים</p>
+              </Link>
               <UserButton />
             </div>
           </SignedIn>

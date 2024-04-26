@@ -7,7 +7,7 @@ interface cardProps {
 }
 export default function Card({ title, explain, img }: cardProps) {
   return (
-    <div className="card w-96 bg-base-300 shadow-xl h-[550px] mt-10">
+    <div className="card lg:w-96 bg-base-300 shadow-xl h-[550px] mt-10">
       <div className="card-body items-start justify-start">
         <h2 className="card-title">{title}</h2>
         <p>{explain}</p>
