@@ -51,15 +51,19 @@ export default function Accordion({ dataa }: dataProps) {
   const filteredData = fullData.filter((item: any) =>
     item.title.includes(searchQuery)
   );
+  const [isFavLoading, setIsFavLoaing] = useState(false);
+
   useEffect(() => {
     if (!isFirstRender.current) {
       const getNewCount = async () => {
+        setIsFavLoaing(true);
         try {
           if (user && user.primaryEmailAddressId) {
             const newCount = await axios.get(
               `/api/getRecipe/${user?.primaryEmailAddressId}`
             );
             setFullData(newCount.data.newData);
+            setIsFavLoaing(false);
           }
         } catch (error) {
           console.error("Error fetching new count:", error);
@@ -71,7 +75,6 @@ export default function Accordion({ dataa }: dataProps) {
       isFirstRender.current = false;
     }
   }, [dataGlobal, user]); // Adding 'user' as a dependency for the effect
-  const [isFavLoading, setIsFavLoaing] = useState(false);
   const addToFavHanlder = async (id: number) => {
     setIsFavLoaing(true);
     const send = await axios.patch("/api/addToFav", {

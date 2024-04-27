@@ -4,7 +4,7 @@ import Link from "next/link";
 import Res from "./Res";
 export default function NavBar() {
   return (
-    <div className="  w-screen z-[50000000000000000000000000]  ">
+    <div className=" z-[50000000000000000000000000]  ">
       <div className="navbar bg-base-300 lg:px-20   ">
         <div className="flex-1 ">
           <Link href={"/"}>

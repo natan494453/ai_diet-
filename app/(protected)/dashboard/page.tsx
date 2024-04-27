@@ -35,7 +35,7 @@ export default async function page() {
       isFavorite: true,
     },
   });
-  console.log(countFav._count.isFavorite);
+
   return (
     <div className=" ">
       <Stats
