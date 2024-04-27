@@ -1,6 +1,7 @@
 "use client";
 interface props {
   count: number;
+  countFav: number;
 }
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,12 +9,13 @@ import { RootState, AppDispatch } from "@/lib/store";
 
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useState, useEffect, useRef, use } from "react";
-export default function Stats({ count }: props) {
+export default function Stats({ count, countFav }: props) {
   const data = useSelector((state: RootState) => state.fetchStates.value);
 
   const { user, isLoaded } = useUser();
   const [userImg, setUserImg] = useState<string | undefined>(undefined);
   const [countState, SetCount] = useState(count);
+  const [favState, SetFavCount] = useState(countFav);
   useEffect(() => {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
@@ -33,7 +35,20 @@ export default function Stats({ count }: props) {
           console.error("Error fetching new count:", error);
         }
       };
+      const getNewFavCount = async () => {
+        try {
+          if (user && user.primaryEmailAddressId) {
+            const newCount = await axios.get(
+              `/api/getFav/${user.primaryEmailAddressId}`
+            );
 
+            SetFavCount(newCount.data.count);
+          }
+        } catch (error) {
+          console.error("Error fetching new count:", error);
+        }
+      };
+      getNewFavCount();
       getNewCount();
     } else {
       isFirstRender.current = false;
@@ -59,7 +74,11 @@ export default function Stats({ count }: props) {
           <div className="stat-desc text-secondary">מתכונים שנוצרו </div>
         </div>
       </div>
-      <div className="stat max-lg:hidden">
+      <div className="stat max-lg:hidden flex justify-around items-center">
+        <div>
+          <div className="stat-value text-primary">{favState}</div>
+          <div className="stat-title">מתכונים מעודפים</div>
+        </div>
         <div className="stat-figure text-primary ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,9 +94,6 @@ export default function Stats({ count }: props) {
             ></path>
           </svg>
         </div>
-        <div className="stat-title">Total Likes</div>
-        <div className="stat-value text-primary">25.6K</div>
-        <div className="stat-desc">21% more than last month</div>
       </div>
 
       <div className="stat max-lg:hidden">

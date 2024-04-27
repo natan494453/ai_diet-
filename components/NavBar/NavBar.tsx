@@ -23,7 +23,7 @@ export default function NavBar() {
               <Link href={"/dashboard"}>
                 <p>מתכונים</p>
               </Link>
-              <Link href={"/fav"}>
+              <Link href={"/favorite"}>
                 <p>מועדפים</p>
               </Link>
             </div>
