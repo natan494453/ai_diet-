@@ -118,7 +118,7 @@ export default function Accordion({ dataa }: dataProps) {
               ></div>{" "}
               <button
                 onClick={() => openModal(item.title, item.id)}
-                className="collapse-content btn btn-error absolute  bottom-0 lg:left-[0%] max-lg:left-0   flex items-center justify-center z-50 pt-3 w-[123px]"
+                className="collapse-content btn btn-error absolute lg:top-0  bottom-0 lg:left-[0%] max-lg:left-0   flex items-center justify-center z-50 pt-3 w-[40%] lg:w-[123px]"
               >
                 מחק
               </button>
@@ -127,7 +127,7 @@ export default function Accordion({ dataa }: dataProps) {
                 onClick={() => {
                   addToFavHanlder(item.id);
                 }}
-                className="collapse-content btn btn-success absolute bottom-0 left-[10%]  items-center z-50 pt-3 max-lg:right-0"
+                className="collapse-content btn btn-success lg:top-0 absolute bottom-0 left-[10%]  items-center z-50 pt-3 max-lg:right-0 lg:w-[123px] w-[40%]"
               >
                 {item.isFavorite ? "    הסר למעודפים" : "    הוסף למעודפים"}
               </button>
