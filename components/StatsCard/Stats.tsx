@@ -12,7 +12,6 @@ import { useState, useEffect, useRef, use } from "react";
 export default function Stats({ count, countFav }: props) {
   const data = useSelector((state: RootState) => state.fetchStates.value);
   const fav = useSelector((state: RootState) => state.fetchStates.valueOfFev);
-  console.log(fav);
   const { user, isLoaded } = useUser();
   const [userImg, setUserImg] = useState<string | undefined>(undefined);
   const [countState, SetCount] = useState(count);
