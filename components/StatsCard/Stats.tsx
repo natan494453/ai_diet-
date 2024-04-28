@@ -11,7 +11,8 @@ import Clerk, { useUser } from "@clerk/clerk-react";
 import { useState, useEffect, useRef, use } from "react";
 export default function Stats({ count, countFav }: props) {
   const data = useSelector((state: RootState) => state.fetchStates.value);
-
+  const fav = useSelector((state: RootState) => state.fetchStates.valueOfFev);
+  console.log(fav);
   const { user, isLoaded } = useUser();
   const [userImg, setUserImg] = useState<string | undefined>(undefined);
   const [countState, SetCount] = useState(count);
@@ -35,20 +36,7 @@ export default function Stats({ count, countFav }: props) {
           console.error("Error fetching new count:", error);
         }
       };
-      const getNewFavCount = async () => {
-        try {
-          if (user && user.primaryEmailAddressId) {
-            const newCount = await axios.get(
-              `/api/getFav/${user.primaryEmailAddressId}`
-            );
 
-            SetFavCount(newCount.data.count);
-          }
-        } catch (error) {
-          console.error("Error fetching new count:", error);
-        }
-      };
-      getNewFavCount();
       getNewCount();
     } else {
       isFirstRender.current = false;
@@ -59,6 +47,23 @@ export default function Stats({ count, countFav }: props) {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
 
+  useEffect(() => {
+    const getNewFavCount = async () => {
+      try {
+        if (user && user.primaryEmailAddressId) {
+          const newCount = await axios.get(
+            `/api/getFav/${user.primaryEmailAddressId}`
+          );
+          console.log(newCount.data);
+          SetFavCount(newCount.data.count);
+        }
+      } catch (error) {
+        console.error("Error fetching new count:", error);
+      }
+    };
+
+    getNewFavCount();
+  }, [fav, user]);
   return (
     <div className="stats shadow  w-[99vw] max-lg:mt-2">
       <div className="flex items-center justify-around">

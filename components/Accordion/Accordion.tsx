@@ -5,7 +5,7 @@ import axios from "axios";
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/lib/store";
-import { addRecipe } from "@/lib/features/fetchStates";
+import { addRecipe, addFav } from "@/lib/features/fetchStates";
 interface dataProps {
   dataa: any;
 }
@@ -56,7 +56,6 @@ export default function Accordion({ dataa }: dataProps) {
   useEffect(() => {
     if (!isFirstRender.current) {
       const getNewCount = async () => {
-        setIsFavLoaing(true);
         try {
           if (user && user.primaryEmailAddressId) {
             const newCount = await axios.get(
@@ -77,11 +76,21 @@ export default function Accordion({ dataa }: dataProps) {
   }, [dataGlobal, user]); // Adding 'user' as a dependency for the effect
   const addToFavHanlder = async (id: number) => {
     setIsFavLoaing(true);
+    setFullData((prevData: any) => {
+      return prevData.map((item: any) => {
+        if (item.id === id) {
+          // Toggle isFavorite value
+          return { ...item, isFavorite: !item.isFavorite };
+        }
+        return item;
+      });
+    });
     const send = await axios.patch("/api/addToFav", {
       id: id,
     });
-    dispatch(addRecipe(null));
+
     setIsFavLoaing(false);
+    dispatch(addFav(null));
   };
   return (
     <div className="flex justify-center relative flex-col items-center gap-10">

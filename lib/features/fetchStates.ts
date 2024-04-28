@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 interface FetchState {
   value: boolean;
-  valueOfFev: boolean;
+  valueOfFev: number;
 }
 const initialState: FetchState = {
   value: false,
-  valueOfFev: false,
+  valueOfFev: 0,
 };
 
 export const fetchStates = createSlice({
@@ -17,7 +17,7 @@ export const fetchStates = createSlice({
       state.value = !state.value;
     },
     addFav: (state, action) => {
-      state.valueOfFev = !state.value;
+      state.valueOfFev += 1;
     },
   },
 });
