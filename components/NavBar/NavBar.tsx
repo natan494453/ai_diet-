@@ -26,7 +26,7 @@ export default function NavBar() {
               <Link href={"/favorite"}>
                 <p>מועדפים</p>
               </Link>
-              <UserButton />
+              <UserButton afterSignOutUrl="/" />
             </div>
             <Res />
           </SignedIn>
