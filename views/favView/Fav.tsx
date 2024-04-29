@@ -11,15 +11,21 @@ interface Props {
     recipe: string;
     isFavorite: boolean;
   }[];
+  user?: string;
 }
 
-export default function Fav({ favRecapis }: Props) {
-  // const sentizedTitle = favRecapis.map((item) => {
-  //   return DOMPurify?.sanitize(item.);
-  // });
+export default function Fav({ favRecapis, user }: Props) {
+  const [favData, setFaveData] = useState(favRecapis);
+  useEffect(() => {
+    const getFav = async () => {
+      const data = await axios.get(`api/getFav/${user}`);
+      setFaveData(data.data.fav);
+    };
+    getFav();
+  }, []);
   return (
     <div className="flex flex-col gap-10 items-center mt-10 ">
-      {favRecapis.map((item) => {
+      {favData.map((item) => {
         return (
           <div className="chat-bubble w-[80vw]" key={item.id}>
             <div

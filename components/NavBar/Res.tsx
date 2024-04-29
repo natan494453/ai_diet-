@@ -26,8 +26,12 @@ export default function Res() {
               d="M4 6h16M4 12h16M4 18h16"
             ></path>
           </svg>
-        </button>
+        </button>{" "}
+        <div className=" absolute top-1/2 translate-y-[-50%] left-16">
+          <UserButton />
+        </div>
       </div>
+
       <div
         className={`   absolute  bg-base-300  left-0 top-16 w-screen duration-1000   ${
           isHam ? "h-[100px] opacity-100 z-[50]" : "h-[60px] opacity-0 z-[-5]"
