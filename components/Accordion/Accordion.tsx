@@ -141,7 +141,7 @@ export default function Accordion({ dataa }: dataProps) {
                 }}
                 className="collapse-content btn btn-success lg:top-0 absolute bottom-0 left-[10%]  items-center z-50 pt-3 max-lg:right-0 lg:w-[123px] w-[40%]"
               >
-                {item.isFavorite ? "    הסר למעודפים" : "    הוסף למעודפים"}
+                {item.isFavorite ? "    הסר ממעודפים" : "    הוסף למעודפים"}
               </button>
             </div>
           );

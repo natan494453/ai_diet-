@@ -29,7 +29,7 @@ export default async function page() {
       {favRecapis.length === 0 ? (
         <h3 className="text-8xl  text-center mt-10">אין מתכונים במועדפים</h3>
       ) : (
-        <Fav />
+        <Fav favRecapis={favRecapis} />
       )}
     </div>
   );
