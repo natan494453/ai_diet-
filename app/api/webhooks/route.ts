@@ -2,6 +2,9 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import prisma from "@/db/connect";
+import { fetchMutation, fetchQuery } from "convex/nextjs";
+import { api } from "@/convex/_generated/api";
+
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -47,10 +50,9 @@ export async function POST(req: Request) {
       status: 400,
     });
   }
-  interface Attributes {
-    email_addresses: [{ email_address: string }];
-  }
+
   // Get the ID and type
+
   const { id, ...attributes } = evt.data;
   const eventType = evt.type;
   if (eventType === "user.created") {
@@ -59,21 +61,19 @@ export async function POST(req: Request) {
     });
 
     if (!user) {
-      const newUser = await prisma.user.create({
-        data: {
-          id: attributes.email_addresses[0].id,
-          email: attributes.email_addresses[0].email_address,
-          method:
-            attributes.external_accounts[0].provider ||
-            attributes.external_accounts[0].object,
-          name:
-            attributes.username ||
-            attributes.external_accounts[0].given_name ||
-            attributes.external_accounts[0].first_name,
-        },
+      await fetchMutation(api.tasks.createUser, {
+        id: attributes.email_addresses[0].id,
+        email: attributes.email_addresses[0].email_address,
+        method:
+          attributes.external_accounts[0].provider ||
+          attributes.external_accounts[0].object,
+        name:
+          attributes.username ||
+          attributes.external_accounts[0].given_name ||
+          attributes.external_accounts[0].first_name,
       });
     }
   }
 
-  return new Response("", { status: 200 });
+  return new Response("secsses", { status: 200 });
 }
