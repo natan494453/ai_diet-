@@ -72,6 +72,7 @@ export const getRecipe = query({
   handler: async (ctx, args) => {
     const recipes = await ctx.db
       .query("recipes")
+      .order("desc")
       .filter((q) => q.eq(q.field("userId"), args.userId))
       .collect();
     return recipes;

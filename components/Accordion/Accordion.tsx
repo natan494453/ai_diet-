@@ -8,7 +8,6 @@ import { RootState, AppDispatch } from "@/lib/store";
 import { addRecipe, addFav } from "@/lib/features/fetchStates";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { currentUser } from "@clerk/nextjs/server";
 import { editFav } from "@/actions/iditFav";
 interface dataProps {
   dataa: any;
@@ -46,21 +45,19 @@ export default function Accordion({ dataa }: dataProps) {
       </>
     ),
   });
-  const dataGlobal = useSelector((state: RootState) => state.fetchStates.value);
   const dispatch: AppDispatch = useDispatch();
   const [fullData, setFullData] = useState(dataa);
-  const isFirstRender = useRef(true);
   const { user, isLoaded } = useUser();
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const filteredData = fullData.filter((item: any) =>
-    item.title.includes(searchQuery)
-  );
+
   const [isFavLoading, setIsFavLoaing] = useState(false);
 
   const recipes = useQuery(api.tasks.getRecipe, {
     userId: user?.primaryEmailAddressId,
   });
-
+  const filteredData = recipes?.filter((item: any) =>
+    item.title.includes(searchQuery)
+  );
   const addToFavHanlder = async (id: string) => {
     setIsFavLoaing(true);
     editFav(id);
@@ -85,7 +82,7 @@ export default function Accordion({ dataa }: dataProps) {
       </div>
 
       <div className="flex flex-col gap-10 w-[80vw] ">
-        {recipes?.map((item: any, index: number) => {
+        {filteredData?.map((item: any, index: number) => {
           return (
             <div
               key={item.id}
