@@ -5,6 +5,8 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { heIL } from "@clerk/localizations";
 import StoreProvider from "./StoreProvider";
+import ConvexClientProvider from "./ConvexClientProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,7 +24,9 @@ export default function RootLayout({
       <html lang="en" dir="rtl" data-theme="dark">
         <body className={inter.className}>
           <NavBar />
-          <StoreProvider>{children}</StoreProvider>
+          <StoreProvider>
+            <ConvexClientProvider>{children} </ConvexClientProvider>
+          </StoreProvider>
         </body>
       </html>
     </ClerkProvider>

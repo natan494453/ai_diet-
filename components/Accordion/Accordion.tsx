@@ -6,6 +6,10 @@ import Clerk, { useUser } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/lib/store";
 import { addRecipe, addFav } from "@/lib/features/fetchStates";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { currentUser } from "@clerk/nextjs/server";
+import { editFav } from "@/actions/iditFav";
 interface dataProps {
   dataa: any;
 }
@@ -53,45 +57,16 @@ export default function Accordion({ dataa }: dataProps) {
   );
   const [isFavLoading, setIsFavLoaing] = useState(false);
 
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      const getNewCount = async () => {
-        try {
-          if (user && user.primaryEmailAddressId) {
-            const newCount = await axios.get(
-              `/api/getRecipe/${user?.primaryEmailAddressId}`
-            );
-            setFullData(newCount.data.newData);
-            setIsFavLoaing(false);
-          }
-        } catch (error) {
-          console.error("Error fetching new count:", error);
-        }
-      };
+  const recipes = useQuery(api.tasks.getRecipe, {
+    userId: user?.primaryEmailAddressId,
+  });
 
-      getNewCount();
-    } else {
-      isFirstRender.current = false;
-    }
-  }, [dataGlobal, user]); // Adding 'user' as a dependency for the effect
-  const addToFavHanlder = async (id: number) => {
+  const addToFavHanlder = async (id: string) => {
     setIsFavLoaing(true);
-    setFullData((prevData: any) => {
-      return prevData.map((item: any) => {
-        if (item.id === id) {
-          // Toggle isFavorite value
-          return { ...item, isFavorite: !item.isFavorite };
-        }
-        return item;
-      });
-    });
-    const send = await axios.patch("/api/addToFav", {
-      id: id,
-    });
-
+    editFav(id);
     setIsFavLoaing(false);
-    dispatch(addFav(null));
   };
+
   return (
     <div className="flex justify-center relative flex-col items-center gap-10">
       {modal}
@@ -110,7 +85,7 @@ export default function Accordion({ dataa }: dataProps) {
       </div>
 
       <div className="flex flex-col gap-10 w-[80vw] ">
-        {filteredData.map((item: any, index: number) => {
+        {recipes?.map((item: any, index: number) => {
           return (
             <div
               key={item.id}
@@ -137,7 +112,7 @@ export default function Accordion({ dataa }: dataProps) {
               <button
                 disabled={isFavLoading}
                 onClick={() => {
-                  addToFavHanlder(item.id);
+                  addToFavHanlder(item._id);
                 }}
                 className="collapse-content btn btn-success lg:top-0 absolute bottom-0 left-[10%]  items-center z-50 pt-3 max-lg:right-0 lg:w-[123px] w-[40%] cursor-pointer"
               >

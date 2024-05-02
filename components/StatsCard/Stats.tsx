@@ -1,68 +1,35 @@
 "use client";
-interface props {
-  count: number;
-  countFav: number;
-}
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/lib/store";
 
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useState, useEffect, useRef, use } from "react";
-export default function Stats({ count, countFav }: props) {
-  const data = useSelector((state: RootState) => state.fetchStates.value);
-  const fav = useSelector((state: RootState) => state.fetchStates.valueOfFev);
+
+export default function Stats() {
   const { user, isLoaded } = useUser();
   const [userImg, setUserImg] = useState<string | undefined>(undefined);
-  const [countState, SetCount] = useState(count);
-  const [favState, SetFavCount] = useState(countFav);
+
   useEffect(() => {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
-  const isFirstRender = useRef(true);
+
+  const recipes = useQuery(api.tasks.getRecipe, {
+    userId: user?.primaryEmailAddressId,
+  });
+  const [favCount, setFavCount] = useState(0);
   useEffect(() => {
-    if (!isFirstRender.current) {
-      const getNewCount = async () => {
-        try {
-          if (user && user.primaryEmailAddressId) {
-            const newCount = await axios.get(
-              `/api/getCount/${user.primaryEmailAddressId}`
-            );
-
-            SetCount(newCount.data.newCount);
-          }
-        } catch (error) {
-          console.error("Error fetching new count:", error);
+    if (recipes) {
+      const favoriteCount = recipes.reduce((count, recipe) => {
+        if (recipe.isFavorite) {
+          return count + 1;
+        } else {
+          return count;
         }
-      };
-
-      getNewCount();
-    } else {
-      isFirstRender.current = false;
+      }, 0);
+      setFavCount(favoriteCount);
     }
-  }, [data, user]); // Adding 'user' as a dependency for the effect
+  }, [recipes]);
 
-  useEffect(() => {
-    if (user) setUserImg(user.imageUrl);
-  }, [user]);
-
-  useEffect(() => {
-    const getNewFavCount = async () => {
-      try {
-        if (user && user.primaryEmailAddressId) {
-          const newCount = await axios.get(
-            `/api/getFav/${user.primaryEmailAddressId}`
-          );
-          console.log(newCount.data);
-          SetFavCount(newCount.data.count);
-        }
-      } catch (error) {
-        console.error("Error fetching new count:", error);
-      }
-    };
-
-    getNewFavCount();
-  }, [fav, user]);
   return (
     <div className="stats shadow  w-[99vw] max-lg:mt-2">
       <div className="flex items-center justify-around">
@@ -74,13 +41,13 @@ export default function Stats({ count, countFav }: props) {
           </div>
         </div>{" "}
         <div>
-          <div className="stat-value">{countState}</div>{" "}
+          <div className="stat-value">{recipes?.length}</div>{" "}
           <div className="stat-desc text-secondary">מתכונים שנוצרו </div>
         </div>
       </div>
       <div className="stat max-lg:hidden flex justify-around items-center">
         <div>
-          <div className="stat-value text-primary">{favState}</div>
+          <div className="stat-value text-primary">{favCount}</div>
           <div className="stat-title">מתכונים מעודפים</div>
         </div>
         <div className="stat-figure text-primary ">

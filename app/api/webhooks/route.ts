@@ -56,8 +56,8 @@ export async function POST(req: Request) {
   const { id, ...attributes } = evt.data;
   const eventType = evt.type;
   if (eventType === "user.created") {
-    const user = await prisma.user.findFirst({
-      where: { email: attributes.email_addresses[0].email_address },
+    const user = await fetchQuery(api.tasks.getuser, {
+      userId: attributes.email_addresses[0].email_address,
     });
 
     if (!user) {

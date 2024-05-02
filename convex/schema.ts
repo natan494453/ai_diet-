@@ -11,7 +11,7 @@ export default defineSchema({
   recipes: defineTable({
     title: v.string(),
     recipe: v.string(),
-    userId: v.id("users"),
+    userId: v.string(), // Reference to the users table
     isFavorite: v.boolean(),
   }).index("userId", ["userId"]),
 });
