@@ -85,7 +85,7 @@ export default function ChatHero() {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS chat bubble component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                src="https://m.media-amazon.com/images/I/61m0SZMyRzL._AC_SL1500_.jpg"
               />
             </div>
           </div>

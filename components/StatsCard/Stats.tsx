@@ -14,10 +14,10 @@ export default function Stats() {
   }, [user]);
 
   const recipes = useQuery(api.tasks.getRecipe, {
-    userId: user?.primaryEmailAddressId,
+    userId: user?.primaryEmailAddressId as any,
   });
   const userCurrent = useQuery(api.tasks.getuser, {
-    userId: user?.primaryEmailAddressId,
+    userId: user?.primaryEmailAddressId as any,
   });
   const [favCount, setFavCount] = useState(0);
   useEffect(() => {

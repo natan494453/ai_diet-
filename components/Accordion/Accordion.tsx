@@ -7,7 +7,6 @@ import { api } from "@/convex/_generated/api";
 import { editFav } from "@/actions/iditFav";
 import { deleteRecipeHandler } from "@/actions/delRecipe";
 import { Id } from "@/convex/_generated/dataModel";
-import { any } from "zod";
 
 export default function Accordion() {
   const deleteItem = async (id: Id<"recipes">) => {

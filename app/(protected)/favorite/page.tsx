@@ -1,6 +1,5 @@
 import React from "react";
 import Fav from "@/views/favView/Fav";
-import prisma from "@/db/connect";
 import { auth, currentUser } from "@clerk/nextjs/server";
 
 export const dynamic = "force-dynamic";
@@ -9,7 +8,7 @@ export const metadata: Metadata = {
   title: "מועדפים",
   description: "מתכונים",
 };
-import { api } from "@/convex/_generated/api";
+
 export default async function page() {
   const user = await currentUser();
 
