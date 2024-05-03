@@ -7,6 +7,7 @@ export default defineSchema({
     email: v.string(),
     name: v.string(),
     method: v.string(),
+    count: v.number(),
   }),
   recipes: defineTable({
     title: v.string(),

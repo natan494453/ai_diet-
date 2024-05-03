@@ -16,6 +16,10 @@ export default function Stats() {
   const recipes = useQuery(api.tasks.getRecipe, {
     userId: user?.primaryEmailAddressId,
   });
+  const userCurrent = useQuery(api.tasks.getuser, {
+    userId: user?.primaryEmailAddressId,
+  });
+  console.log(userCurrent[0].count);
   const [favCount, setFavCount] = useState(0);
   useEffect(() => {
     if (recipes) {
@@ -42,7 +46,7 @@ export default function Stats() {
         </div>{" "}
         <div>
           <div className="stat-value">{recipes?.length}</div>{" "}
-          <div className="stat-desc text-secondary">מתכונים שנוצרו </div>
+          <div className="stat-title text-secondary">מתכונים שנוצרו </div>
         </div>
       </div>
       <div className="stat max-lg:hidden flex justify-around items-center">
@@ -67,7 +71,11 @@ export default function Stats() {
         </div>
       </div>
 
-      <div className="stat max-lg:hidden">
+      <div className="stat max-lg:hidden flex justify-around items-center">
+        <div>
+          <div className="stat-value  mt-1">{userCurrent[0]?.count}</div>
+          <div className="stat-title text-secondary">שאלות שנישאלו</div>
+        </div>
         <div className="stat-figure text-secondary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -83,9 +91,6 @@ export default function Stats() {
             ></path>
           </svg>
         </div>
-        <div className="stat-title">Page Views</div>
-        <div className="stat-value text-secondary">2.6M</div>
-        <div className="stat-desc">21% more than last month</div>
       </div>
     </div>
   );

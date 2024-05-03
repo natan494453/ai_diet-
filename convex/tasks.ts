@@ -13,6 +13,7 @@ export const createUser = mutation({
       email: args.email,
       method: args.method,
       name: args.name,
+      count: 0,
     });
     return newUser;
   },
@@ -62,6 +63,16 @@ export const getuser = query({
       .filter((q) => q.eq(q.field("id"), args.userId))
       .collect();
     return user;
+  },
+});
+export const addCount = mutation({
+  args: { userId: v.any(), count: v.number() },
+
+  handler: async (ctx, args) => {
+    const addCoundHandler = await ctx.db.patch(args.userId, {
+      count: args.count,
+    });
+    return addCoundHandler;
   },
 });
 

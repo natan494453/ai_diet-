@@ -10,7 +10,7 @@ export default function NavBar() {
           <Link href={"/"}>
             <p className="btn btn-ghost text-xl">דיאטה AI</p>
           </Link>
-          <label className="swap swap-rotate">
+          <label className="swap swap-rotate mr-10">
             {/* this hidden checkbox controls the state */}
             <input
               type="checkbox"
@@ -19,7 +19,7 @@ export default function NavBar() {
             />
 
             <svg
-              className="swap-off fill-current w-10 h-10"
+              className="swap-off fill-current w-8 h-10"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -27,7 +27,7 @@ export default function NavBar() {
             </svg>
 
             <svg
-              className="swap-on fill-current w-10 h-10"
+              className="swap-on fill-current w-8 h-10"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >

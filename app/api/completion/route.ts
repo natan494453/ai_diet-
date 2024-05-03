@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, StreamingTextResponse } from "ai";
 import prisma from "@/db/connect";
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
-import { fetchMutation } from "convex/nextjs";
+import { fetchMutation, fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 
 // IMPORTANT! Set the runtime to edge
@@ -49,7 +49,11 @@ export async function POST(req: Request) {
       const recipeName = match ? match[1] : "error";
       const indexOf = completion.indexOf(":");
       const recippe = completion.substring(indexOf + 2, completion.length);
-
+      const user = await fetchQuery(api.tasks.getuser, { userId: userMail });
+      await fetchMutation(api.tasks.addCount, {
+        userId: user[0]._id,
+        count: user[0].count + 1,
+      });
       if (completion.length > 150) {
         await fetchMutation(api.tasks.createRecipe, {
           title: recipeName,
