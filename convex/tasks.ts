@@ -78,3 +78,16 @@ export const getRecipe = query({
     return recipes;
   },
 });
+
+export const getFavRecipe = query({
+  args: { userId: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    const recipesFav = await ctx.db
+      .query("recipes")
+      .order("desc")
+      .filter((q) => q.eq(q.field("userId"), args.userId))
+      .filter((q) => q.eq(q.field("isFavorite"), true))
+      .collect();
+    return recipesFav;
+  },
+});

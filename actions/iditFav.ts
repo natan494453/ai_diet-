@@ -13,7 +13,7 @@ export const editFav = async (id: string) => {
     }
     const updatedIsFavorite = !currentRecipe[0].isFavorite;
     await fetchMutation(api.tasks.EditFav, {
-      recipeId: id,
+      recipeId: id as any,
       stats: updatedIsFavorite,
     });
   } catch (error) {

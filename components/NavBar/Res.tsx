@@ -28,7 +28,7 @@ export default function Res() {
           </svg>
         </button>{" "}
         <div className=" absolute top-1/2 translate-y-[-50%] left-16">
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         </div>
       </div>
 
