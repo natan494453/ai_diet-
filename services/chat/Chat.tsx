@@ -4,14 +4,8 @@ import React from "react";
 import DOMPurify from "isomorphic-dompurify";
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/lib/store";
-import { addRecipe } from "@/lib/features/fetchStates";
 
 export default function Chat() {
-  const dispatch: AppDispatch = useDispatch();
-  const data = useSelector((state: RootState) => state.fetchStates.value);
-
   const { user, isLoaded } = useUser();
   const [userMail, setUserImg] = useState<string | undefined>(undefined);
   useEffect(() => {
@@ -28,10 +22,6 @@ export default function Chat() {
     handleSubmit,
   } = useCompletion({
     body: { userMail: userMail },
-
-    onFinish: () => {
-      dispatch(addRecipe(null));
-    },
   });
   const sentaized = DOMPurify?.sanitize(completion);
 

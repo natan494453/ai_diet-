@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useModal } from "@/hooks/useModal";
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useQuery, useMutation } from "convex/react";

@@ -39,12 +39,16 @@ export default function Res() {
       >
         <div>
           <SignedIn>
-            <div className=" text-xl flex flex-col gap-5 items-end pl-10 ">
+            <div className=" text-xl flex flex-col gap-5  ">
               <Link href={"/dashboard"}>
-                <p>מתכונים</p>
+                <div className=" w-screen bg-base-200  pr-10 ">
+                  <p>מתכונים</p>
+                </div>
               </Link>
               <Link href={"/favorite"}>
-                <p>מועדפים</p>
+                <div className="w-screen bg-base-200  pr-10">
+                  <p>מועדפים</p>
+                </div>
               </Link>
             </div>
           </SignedIn>
