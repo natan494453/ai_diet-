@@ -1,29 +1,20 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { useModal } from "@/hooks/useModal";
-import axios from "axios";
 import Clerk, { useUser } from "@clerk/clerk-react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/lib/store";
-import { addRecipe, addFav } from "@/lib/features/fetchStates";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { editFav } from "@/actions/iditFav";
-interface dataProps {
-  dataa: any;
-}
+import { deleteRecipeHandler } from "@/actions/delRecipe";
+import { Id } from "@/convex/_generated/dataModel";
+import { any } from "zod";
 
-export default function Accordion({ dataa }: dataProps) {
-  const deleteItem = async (id: number) => {
+export default function Accordion() {
+  const deleteItem = async (id: Id<"recipes">) => {
     try {
       if (user && user.primaryEmailAddressId && data) {
-        await axios.delete(`/api/delRecipe/`, {
-          data: {
-            data: id,
-          },
-        });
+        await deleteRecipeHandler(id);
         closeModal();
-        dispatch(addRecipe(null));
       }
     } catch (error) {
       console.error("Error deleting recipe:", error);
@@ -45,15 +36,13 @@ export default function Accordion({ dataa }: dataProps) {
       </>
     ),
   });
-  const dispatch: AppDispatch = useDispatch();
-  const [fullData, setFullData] = useState(dataa);
   const { user, isLoaded } = useUser();
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [isFavLoading, setIsFavLoaing] = useState(false);
 
   const recipes = useQuery(api.tasks.getRecipe, {
-    userId: user?.primaryEmailAddressId,
+    userId: user?.primaryEmailAddressId as any,
   });
   const filteredData = recipes?.filter((item: any) =>
     item.title.includes(searchQuery)
@@ -101,7 +90,7 @@ export default function Accordion({ dataa }: dataProps) {
                 dangerouslySetInnerHTML={{ __html: item.recipe }}
               ></div>{" "}
               <button
-                onClick={() => openModal(item.title, item.id)}
+                onClick={() => openModal(item.title, item._id)}
                 className="collapse-content btn cursor-pointer btn-error absolute lg:top-0  bottom-0 lg:left-[0%] max-lg:left-0   flex items-center justify-center z-50 pt-3 w-[40%] lg:w-[123px]"
               >
                 מחק

@@ -1,7 +1,5 @@
-import { current } from "@reduxjs/toolkit";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-import { currentUser } from "@clerk/nextjs/server";
 export const createUser = mutation({
   args: {
     id: v.string(),
@@ -89,5 +87,13 @@ export const getFavRecipe = query({
       .filter((q) => q.eq(q.field("isFavorite"), true))
       .collect();
     return recipesFav;
+  },
+});
+
+export const deleteRecipe = mutation({
+  args: { recipeId: v.id("recipes") },
+  handler: async (ctx, args) => {
+    const deleteRec = await ctx.db.delete(args.recipeId);
+    return deleteRec;
   },
 });
