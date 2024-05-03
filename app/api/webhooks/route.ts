@@ -60,7 +60,7 @@ export async function POST(req: Request) {
       userId: attributes.email_addresses[0].email_address,
     });
 
-    if (!user) {
+    if (user.length === 0) {
       await fetchMutation(api.tasks.createUser, {
         id: attributes.email_addresses[0].id,
         email: attributes.email_addresses[0].email_address,
