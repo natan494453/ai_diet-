@@ -27,9 +27,9 @@ export async function POST(req: Request) {
     <br/>
     instructions :
     <br/>
-    1. instructions 1
+    1. instructions : ...
     <br/>
-    2. instructions  2 
+    2. instructions  : ... 
     all in hebrew
     and in html
     i need exact measurements and portion sizes
