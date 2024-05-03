@@ -19,7 +19,6 @@ export default function Stats() {
   const userCurrent = useQuery(api.tasks.getuser, {
     userId: user?.primaryEmailAddressId,
   });
-  console.log(userCurrent[0].count);
   const [favCount, setFavCount] = useState(0);
   useEffect(() => {
     if (recipes) {
@@ -73,7 +72,10 @@ export default function Stats() {
 
       <div className="stat max-lg:hidden flex justify-around items-center">
         <div>
-          <div className="stat-value  mt-1">{userCurrent[0]?.count}</div>
+          {userCurrent && (
+            <div className="stat-value  mt-1">{userCurrent[0]?.count}</div>
+          )}
+
           <div className="stat-title text-secondary">שאלות שנישאלו</div>
         </div>
         <div className="stat-figure text-secondary">
