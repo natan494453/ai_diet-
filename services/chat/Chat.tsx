@@ -21,7 +21,7 @@ export default function Chat() {
     handleInputChange,
     handleSubmit,
   } = useCompletion({
-    body: { userMail: userMail },
+    body: { userMail: userMail, img: user?.imageUrl },
   });
   const sentaized = DOMPurify?.sanitize(completion);
 

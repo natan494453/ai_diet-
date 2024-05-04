@@ -35,7 +35,10 @@ export default function NavBar() {
             </svg>
           </label>
         </div>
-        <div className="flex-none gap-4 ">
+        <div className="flex-none gap-20 ">
+          <Link href={"/recipes"}>
+            <button className=" btn btn-ghost text-xl">יצירות</button>
+          </Link>
           <SignedOut>
             <Link href={"/sign-in"}>
               <button className=" btn btn-accent">התחבר</button>

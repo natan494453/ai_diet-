@@ -48,14 +48,16 @@ export default function Fav({ user }: Props) {
                     __html: DOMPurify.sanitize(item.recipe),
                   }}
                 ></div>{" "}
-                <button
-                  onClick={() => {
-                    addToFavHanlder(item._id);
-                  }}
-                  className=" btn btn-error lg:top-0 absolute bottom-0 left-[10%]  items-center z-50 mt-10  max-lg:right-0 lg:w-[123px] w-[40%] cursor-pointer"
-                >
-                  הסר ממעודפים
-                </button>
+                <div className="flex justify-center mt-2">
+                  <button
+                    onClick={() => {
+                      addToFavHanlder(item._id);
+                    }}
+                    className=" btn btn-error lg:top-0  bottom-0 left-[10%]  items-center z-50 mb-2 mt-2  m-auto  max-lg:right-0 lg:w-[123px] w-[40%] cursor-pointer"
+                  >
+                    הסר ממעודפים
+                  </button>
+                </div>
               </div>
             );
           })}

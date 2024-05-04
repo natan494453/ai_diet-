@@ -8,7 +8,7 @@ export default function ChatHeroMobile() {
   );
   const [typedTextUser, setTypedTextUser] = useState("");
   const [typedTextAI, setTypedTextAI] = useState("");
-  const userText = "בבצל,פסטה,רוטב עבגניות,גבינה";
+  const userText = "בבצל,פסטה,רוטב עגבניות,גבינה";
   const lastText = `הנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
     מרכיבים:<br />
     250 גרם פסטה<br />
@@ -63,7 +63,7 @@ export default function ChatHeroMobile() {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS chat bubble component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                src="https://avatars.githubusercontent.com/u/89205895?s=400&u=3a89b13a0654785bf280a1ec70ec144ef202871c&v=4"
               />
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function ChatHeroMobile() {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS chat bubble component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                src="https://m.media-amazon.com/images/I/61m0SZMyRzL._AC_SL1500_.jpg"
               />
             </div>
           </div>

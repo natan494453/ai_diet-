@@ -9,13 +9,13 @@ export default function ChatHero() {
   );
   const [typedTextUser, setTypedTextUser] = useState("");
   const [typedTextAI, setTypedTextAI] = useState("");
-  const userText = "בבצל,פסטה,רוטב עבגניות,גבינה";
+  const userText = "בבצל,פסטה,רוטב עגבניות,גבינה";
   const lastText = `ההנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
     מרכיבים:<br />
     250 גרם פסטה<br />
     1 בצל גדול , קצוץ<br />
     2-3 כפות רוטב עגבניות<br />
-    100 גרם גבינת פרמזן או רומנו מגוררת<br />
+    100 גרם גבינת פרמזן או רומנו מגורדת<br />
     מלח ופלפל לפי הטעם<br />
     כוס מים<br />
     כוס שמן זית<br />
@@ -53,7 +53,7 @@ export default function ChatHero() {
           } else {
             clearInterval(typingIntervalAI);
           }
-        }, 20);
+        }, 15);
       }
     }, 50);
 

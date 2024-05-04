@@ -6,6 +6,7 @@ export const createUser = mutation({
     email: v.string(),
     name: v.string(),
     method: v.string(),
+    imgUrl: v.string(),
   },
   handler: async (ctx, args) => {
     const newUser = await ctx.db.insert("users", {
@@ -13,6 +14,7 @@ export const createUser = mutation({
       email: args.email,
       method: args.method,
       name: args.name,
+      imgURL: args.imgUrl,
       count: 0,
     });
     return newUser;
@@ -24,6 +26,7 @@ export const createRecipe = mutation({
     title: v.string(),
     userId: v.string(),
     recipe: v.string(),
+    userImg: v.string(),
     isFavorite: v.boolean(),
   },
   handler: async (ctx, args) => {
@@ -32,6 +35,7 @@ export const createRecipe = mutation({
       recipe: args.recipe,
       title: args.title,
       userId: args.userId,
+      userImg: args.userImg,
     });
     return newRecipe;
   },
@@ -85,6 +89,14 @@ export const getRecipe = query({
       .filter((q) => q.eq(q.field("userId"), args.userId))
       .collect();
     return recipes;
+  },
+});
+
+export const getAllRecipe = query({
+  args: {},
+  handler: async (ctx, _) => {
+    const allRecipes = await ctx.db.query("recipes").collect();
+    return allRecipes;
   },
 });
 

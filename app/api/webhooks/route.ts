@@ -55,6 +55,7 @@ export async function POST(req: Request) {
 
   const { id, ...attributes } = evt.data;
   const eventType = evt.type;
+
   if (eventType === "user.created") {
     const user = await fetchQuery(api.tasks.getuser, {
       userId: attributes.email_addresses[0].email_address,
@@ -62,6 +63,7 @@ export async function POST(req: Request) {
 
     if (user.length === 0) {
       await fetchMutation(api.tasks.createUser, {
+        imgUrl: attributes.image_url,
         id: attributes.email_addresses[0].id,
         email: attributes.email_addresses[0].email_address,
         method:

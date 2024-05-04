@@ -8,11 +8,13 @@ export default defineSchema({
     name: v.string(),
     method: v.string(),
     count: v.number(),
+    imgURL: v.string(),
   }),
   recipes: defineTable({
     title: v.string(),
     recipe: v.string(),
     userId: v.string(), // Reference to the users table
+    userImg: v.string(),
     isFavorite: v.boolean(),
   }).index("userId", ["userId"]),
 });

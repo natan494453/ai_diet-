@@ -8,7 +8,7 @@ import { api } from "@/convex/_generated/api";
 // IMPORTANT! Set the runtime to edge
 
 export async function POST(req: Request) {
-  const { prompt, userMail } = await req.json();
+  const { prompt, userMail, img } = await req.json();
 
   const recipe = `
     if you dont see here : [${prompt}] food ingredients or a question about food so you will say that you cant answer!
@@ -56,6 +56,7 @@ export async function POST(req: Request) {
       });
       if (completion.length > 150) {
         await fetchMutation(api.tasks.createRecipe, {
+          userImg: img,
           title: recipeName,
           userId: userMail,
           recipe: recippe,
