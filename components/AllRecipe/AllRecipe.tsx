@@ -14,7 +14,7 @@ export default function AllRecipe() {
         const day = date.getDate();
         const year = date.getFullYear();
         return (
-          <Link href={`recipes/${item._id}`}>
+          <Link key={item._id} href={`recipes/${item._id}`}>
             <div className=" w-80  bg-base-200 shadow-xl mt-10 cursor-pointer ">
               <div className="flex flex-col items-center gap-2 ">
                 <div className="avatar">
