@@ -56,7 +56,7 @@ export const EditFav = mutation({
   },
 });
 export const getuser = query({
-  args: { userId: v.string() },
+  args: { userId: v.optional(v.string()) },
   handler: async (ctx, args) => {
     const user = await ctx.db
       .query("users")
