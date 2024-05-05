@@ -4,13 +4,15 @@ import React from "react";
 import DOMPurify from "isomorphic-dompurify";
 import Clerk, { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
-
-export default function Chat() {
+import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
+import { useAuth } from "@clerk/nextjs";
+export default function Chat({ token }) {
   const { user, isLoaded } = useUser();
   const [userMail, setUserImg] = useState<string | undefined>(undefined);
   useEffect(() => {
-    if (user) setUserImg(user.primaryEmailAddress?.id);
+    if (user) setUserImg(user.id);
   }, [user]);
+  console.log(userMail);
   const [isOK, setIsok] = useState<boolean | null>(false);
   const [isNotOK, setIsNotOK] = useState<boolean | null>(false);
   const {
@@ -21,7 +23,7 @@ export default function Chat() {
     handleInputChange,
     handleSubmit,
   } = useCompletion({
-    body: { userMail: userMail, img: user?.imageUrl },
+    body: { userMail: userMail, img: user?.imageUrl, token: token },
   });
   const sentaized = DOMPurify?.sanitize(completion);
 

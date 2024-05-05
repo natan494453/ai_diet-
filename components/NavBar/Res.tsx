@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
+
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 export default function Res() {

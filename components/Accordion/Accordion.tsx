@@ -2,13 +2,16 @@
 import React, { useState } from "react";
 import { useModal } from "@/hooks/useModal";
 import Clerk, { useUser } from "@clerk/clerk-react";
+import { useConvexAuth } from "convex/react";
+
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { editFav } from "@/actions/iditFav";
 import { deleteRecipeHandler } from "@/actions/delRecipe";
 import { Id } from "@/convex/_generated/dataModel";
+export default function Accordion({ token }) {
+  const { isLoading, isAuthenticated } = useConvexAuth();
 
-export default function Accordion() {
   const deleteItem = async (id: Id<"recipes">) => {
     try {
       if (user && user.primaryEmailAddressId && data) {
@@ -36,13 +39,13 @@ export default function Accordion() {
     ),
   });
   const { user, isLoaded } = useUser();
+
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [isFavLoading, setIsFavLoaing] = useState(false);
 
-  const recipes = useQuery(api.tasks.getRecipe, {
-    userId: user?.primaryEmailAddressId as any,
-  });
+  const recipes = useQuery(api.tasks.getRecipe, "skip");
+  console.log(recipes);
   const filteredData = recipes?.filter((item: any) =>
     item.title.includes(searchQuery)
   );

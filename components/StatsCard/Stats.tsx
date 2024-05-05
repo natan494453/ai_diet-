@@ -13,25 +13,25 @@ export default function Stats() {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
 
-  const recipes = useQuery(api.tasks.getRecipe, {
-    userId: user?.primaryEmailAddressId as any,
-  });
-  const userCurrent = useQuery(api.tasks.getuser, {
-    userId: user?.primaryEmailAddressId as any,
-  });
+  // const recipes = useQuery(api.tasks.getRecipe, {
+  //   userId: user?.primaryEmailAddressId as any,
+  // });
+  // const userCurrent = useQuery(api.tasks.getuser, {
+  //   userId: user?.primaryEmailAddressId as any,
+  // });
   const [favCount, setFavCount] = useState(0);
-  useEffect(() => {
-    if (recipes) {
-      const favoriteCount = recipes.reduce((count, recipe) => {
-        if (recipe.isFavorite) {
-          return count + 1;
-        } else {
-          return count;
-        }
-      }, 0);
-      setFavCount(favoriteCount);
-    }
-  }, [recipes]);
+  // useEffect(() => {
+  //   if (recipes) {
+  //     const favoriteCount = recipes.reduce((count, recipe) => {
+  //       if (recipe.isFavorite) {
+  //         return count + 1;
+  //       } else {
+  //         return count;
+  //       }
+  //     }, 0);
+  //     setFavCount(favoriteCount);
+  //   }
+  // }, [recipes]);
 
   return (
     <div className="stats shadow  w-[99vw] max-lg:mt-2">
@@ -44,7 +44,7 @@ export default function Stats() {
           </div>
         </div>{" "}
         <div>
-          <div className="stat-value">{recipes?.length}</div>{" "}
+          {/* <div className="stat-value">{recipes?.length}</div>{" "} */}
           <div className="stat-title text-secondary">מתכונים שנוצרו </div>
         </div>
       </div>
@@ -71,13 +71,13 @@ export default function Stats() {
       </div>
 
       <div className="stat max-lg:hidden flex justify-around items-center">
-        <div>
+        {/* <div>
           {userCurrent && (
             <div className="stat-value  mt-1">{userCurrent[0]?.count}</div>
           )}
 
           <div className="stat-title text-secondary">שאלות שנישאלו</div>
-        </div>
+        </div> */}
         <div className="stat-figure text-secondary">
           <svg
             xmlns="http://www.w3.org/2000/svg"

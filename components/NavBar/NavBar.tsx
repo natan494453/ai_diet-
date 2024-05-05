@@ -1,8 +1,12 @@
+"use client";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
 
 import Link from "next/link";
 import Res from "./Res";
 export default function NavBar() {
+  useStoreUserEffect();
+
   return (
     <div className=" z-[50000000000000000000000000] relative  ">
       <div className="navbar bg-base-300 lg:px-20 ">

@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "מתכונים",
 };
 export default async function page() {
+  const token = (await auth().getToken({ template: "convex" })) ?? undefined;
+
   const user = await currentUser();
 
   const data = await prisma.recipe.findMany({
@@ -43,10 +45,10 @@ export default async function page() {
         countFav={countFav._count.isFavorite}
       />
       <div className="border-b-2 border-[#f1f1f15b]">
-        <Chat />
+        <Chat token={token} />
       </div>{" "}
       <div className="border-b-2 border-[#f1f1f15b]">
-        <Accordion dataa={data} />
+        <Accordion dataa={data} token={token} />
       </div>
     </div>
   );

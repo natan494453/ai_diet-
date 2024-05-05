@@ -1,45 +1,32 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-export const createUser = mutation({
-  args: {
-    id: v.string(),
-    email: v.string(),
-    name: v.string(),
-    method: v.string(),
-    imgUrl: v.string(),
-  },
-  handler: async (ctx, args) => {
-    const newUser = await ctx.db.insert("users", {
-      id: args.id,
-      email: args.email,
-      method: args.method,
-      name: args.name,
-      imgURL: args.imgUrl,
-      count: 0,
-    });
-    return newUser;
-  },
-});
+import { Id } from "./_generated/dataModel";
 
 export const createRecipe = mutation({
-  args: {
-    title: v.string(),
-    userId: v.string(),
-    recipe: v.string(),
-    userImg: v.string(),
-    isFavorite: v.boolean(),
-  },
+  args: { title: v.string(), recipe: v.string(), isFavorite: v.boolean() },
   handler: async (ctx, args) => {
-    const newRecipe = await ctx.db.insert("recipes", {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Unauthenticated call to mutation");
+    }
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
+    if (!user) {
+      throw new Error("Unauthenticated call to mutation");
+    }
+    await ctx.db.insert("recipes", {
       isFavorite: args.isFavorite,
       recipe: args.recipe,
       title: args.title,
-      userId: args.userId,
-      userImg: args.userImg,
+      userId: user._id,
     });
-    return newRecipe;
   },
 });
+
 export const getCurrentRecipe = query({
   args: { recipeId: v.string() },
   handler: async (ctx, args) => {
@@ -59,16 +46,7 @@ export const EditFav = mutation({
     return newFav;
   },
 });
-export const getuser = query({
-  args: { userId: v.optional(v.string()) },
-  handler: async (ctx, args) => {
-    const user = await ctx.db
-      .query("users")
-      .filter((q) => q.eq(q.field("id"), args.userId))
-      .collect();
-    return user;
-  },
-});
+
 export const addCount = mutation({
   args: { userId: v.any(), count: v.number() },
 
@@ -81,12 +59,26 @@ export const addCount = mutation({
 });
 
 export const getRecipe = query({
-  args: { userId: v.optional(v.string()) },
+  args: {},
+
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Unauthenticated call to mutation");
+    }
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
+    if (!user) {
+      throw new Error("Unauthenticated call to mutation");
+    }
     const recipes = await ctx.db
       .query("recipes")
       .order("desc")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
+      .filter((q) => q.eq(q.field("userId"), user._id))
       .collect();
     return recipes;
   },

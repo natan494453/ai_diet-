@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "@/components/NavBar/NavBar";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import { heIL } from "@clerk/localizations";
+
 import StoreProvider from "./StoreProvider";
 import ConvexClientProvider from "./ConvexClientProvider";
 
@@ -20,15 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider localization={heIL}>
-      <html lang="en" dir="rtl" data-theme="dark">
-        <body className={inter.className}>
-          <NavBar />
-          <StoreProvider>
-            <ConvexClientProvider>{children} </ConvexClientProvider>
-          </StoreProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" dir="rtl" data-theme="dark">
+      <body className={inter.className}>
+        <StoreProvider>
+          <ConvexClientProvider>
+            <NavBar /> {children}
+          </ConvexClientProvider>
+        </StoreProvider>
+      </body>
+    </html>
   );
 }
