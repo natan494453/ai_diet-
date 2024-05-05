@@ -19,14 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="rtl" data-theme="dark">
-      <body className={inter.className}>
-        <StoreProvider>
-          <ConvexClientProvider>
+    <ConvexClientProvider>
+      <html lang="en" dir="rtl" data-theme="dark">
+        <body className={inter.className}>
+          <StoreProvider>
             <NavBar /> {children}
-          </ConvexClientProvider>
-        </StoreProvider>
-      </body>
-    </html>
+          </StoreProvider>
+        </body>
+      </html>
+    </ConvexClientProvider>
   );
 }

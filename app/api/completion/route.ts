@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       const recipeName = match ? match[1] : "error";
       const indexOf = completion.indexOf(":");
       const recippe = completion.substring(indexOf + 2, completion.length);
-      const user = await fetchQuery(api.tasks.getuser, { userId: userMail });
+      //  const user = await fetchQuery(api.tasks.getuser, { userId: userMail });
       // await fetchMutation(api.tasks.addCount, {
       //   userId: user[0]._id,
       //   count: user[0].count + 1,

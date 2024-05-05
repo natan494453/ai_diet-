@@ -3,6 +3,7 @@ import Stats from "@/components/StatsCard/Stats";
 import Accordion from "@/components/Accordion/Accordion";
 import prisma from "@/db/connect";
 import { auth, currentUser } from "@clerk/nextjs/server";
+
 import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
