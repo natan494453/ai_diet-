@@ -41,7 +41,9 @@ export default function NavBar() {
         </div>
         <div className="flex-none gap-20 ">
           <Link href={"/recipes"}>
-            <button className=" btn btn-ghost text-xl">יצירות</button>
+            <button className=" btn btn-ghost text-xl max-lg:hidden">
+              יצירות
+            </button>
           </Link>
           <SignedOut>
             <Link href={"/sign-in"}>

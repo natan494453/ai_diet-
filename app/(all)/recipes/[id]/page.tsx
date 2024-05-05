@@ -11,12 +11,12 @@ export default async function page({ params }: { params: { id: string } }) {
   });
 
   return (
-    <div className="flex justify-center items-center h-[70vh]">
+    <div className="flex justify-center items-center h-[70vh] max-lg:mt-[70%]">
       {recepit.map((item) => {
         return (
           <div
             key={item._id}
-            className=" bg-base-200 lg:w-[60vw] p-10 rounded-xl shadow-2xl max-lg:mt-[100%]"
+            className=" bg-base-200 lg:w-[60vw] p-10 rounded-xl shadow-2xl "
           >
             <div className="font-bold text-2xl">{item.title}</div>
             <div dangerouslySetInnerHTML={{ __html: item.recipe }}></div>

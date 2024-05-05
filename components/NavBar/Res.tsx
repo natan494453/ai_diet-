@@ -36,7 +36,7 @@ export default function Res() {
 
       <div
         className={`   absolute  bg-base-300  left-0 top-16 w-screen duration-1000   ${
-          isHam ? "h-[100px] opacity-100 z-[50]" : "h-[60px] opacity-0 z-[-5]"
+          isHam ? "h-[150px] opacity-100 z-[50]" : "h-[60px] opacity-0 z-[-5]"
         }  `}
       >
         <div>
@@ -50,6 +50,11 @@ export default function Res() {
               <Link href={"/favorite"}>
                 <div className="w-screen bg-base-200  pr-10">
                   <p>מועדפים</p>
+                </div>
+              </Link>
+              <Link href={"/recipes"}>
+                <div className="w-screen bg-base-200  pr-10">
+                  <p>יצירות</p>
                 </div>
               </Link>
             </div>

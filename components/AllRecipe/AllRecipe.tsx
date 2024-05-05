@@ -19,7 +19,7 @@ export default function AllRecipe() {
               <div className="flex flex-col items-center gap-2 ">
                 <div className="avatar">
                   <div className="w-40 rounded-full">
-                    <img src={item.userImg} />
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU8aHAxmx26TWmT26ol5g4MW_QmhdbzNlgmlhacAhWkVHibNUETbilj99cBgdzNJ1IZ7A&usqp=CAU" />
                   </div>
                 </div>
                 <div className=" w-full bg-base-100">
