@@ -1,9 +1,9 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { useQuery, Authenticated } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Clerk, { useUser } from "@clerk/clerk-react";
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect } from "react";
 
 export default function Stats() {
   const { user, isLoaded } = useUser();
@@ -13,44 +13,49 @@ export default function Stats() {
     if (user) setUserImg(user.imageUrl);
   }, [user]);
 
-  // const recipes = useQuery(api.tasks.getRecipe, {
-  //   userId: user?.primaryEmailAddressId as any,
-  // });
-  // const userCurrent = useQuery(api.tasks.getuser, {
-  //   userId: user?.primaryEmailAddressId as any,
-  // });
-  const [favCount, setFavCount] = useState(0);
-  // useEffect(() => {
-  //   if (recipes) {
-  //     const favoriteCount = recipes.reduce((count, recipe) => {
-  //       if (recipe.isFavorite) {
-  //         return count + 1;
-  //       } else {
-  //         return count;
-  //       }
-  //     }, 0);
-  //     setFavCount(favoriteCount);
-  //   }
-  // }, [recipes]);
-
+  const RecipeCount = () => {
+    const recipes = useQuery(api.tasks.getRecipe);
+    return <div className="stat-value">{recipes?.length}</div>;
+  };
+  const FavCount = () => {
+    const favCount = useQuery(api.tasks.getFavRecipe);
+    return <div className="stat-value">{favCount?.length}</div>;
+  };
+  const GetUser = () => {
+    const user = useQuery(api.tasks.user);
+    return <img src={user?.img} alt="" />;
+  };
+  const GetCount = () => {
+    const user = useQuery(api.tasks.user);
+    return <div className="stat-value">{user?.count}</div>;
+  };
   return (
     <div className="stats shadow  w-[99vw] max-lg:mt-2">
       <div className="flex items-center justify-around">
         <div className="text-secondary">
           <div className="avatar online">
             <div className="w-16 rounded-full">
-              <img src={userImg} />
+              <Authenticated>
+                <GetUser />
+              </Authenticated>
             </div>
           </div>
         </div>{" "}
         <div>
-          {/* <div className="stat-value">{recipes?.length}</div>{" "} */}
+          <Authenticated>
+            <RecipeCount />
+          </Authenticated>
           <div className="stat-title text-secondary">מתכונים שנוצרו </div>
         </div>
       </div>
       <div className="stat max-lg:hidden flex justify-around items-center">
         <div>
-          <div className="stat-value text-primary">{favCount}</div>
+          <div className="stat-value text-primary">
+            {" "}
+            <Authenticated>
+              <FavCount />
+            </Authenticated>
+          </div>
           <div className="stat-title">מתכונים מעודפים</div>
         </div>
         <div className="stat-figure text-primary ">
@@ -71,13 +76,13 @@ export default function Stats() {
       </div>
 
       <div className="stat max-lg:hidden flex justify-around items-center">
-        {/* <div>
-          {userCurrent && (
-            <div className="stat-value  mt-1">{userCurrent[0]?.count}</div>
-          )}
+        <div>
+          <Authenticated>
+            <GetCount />
+          </Authenticated>
 
           <div className="stat-title text-secondary">שאלות שנישאלו</div>
-        </div> */}
+        </div>
         <div className="stat-figure text-secondary">
           <svg
             xmlns="http://www.w3.org/2000/svg"

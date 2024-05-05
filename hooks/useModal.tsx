@@ -39,7 +39,7 @@ export const useModal = ({
     setId(id);
     ref.current?.showModal();
   };
-  const deleteItem = () => {};
+
   const modal: ReactNode = (
     <Modal
       onBackdropClick={() => {

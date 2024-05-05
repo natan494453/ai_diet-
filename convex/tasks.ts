@@ -26,6 +26,51 @@ export const createRecipe = mutation({
     });
   },
 });
+export const user = query({
+  args: {},
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Unauthenticated call to mutation");
+    }
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
+    if (!user) {
+      throw new Error("Unauthenticated call to mutation");
+    }
+    return user;
+  },
+});
+export const getFavRecipe = query({
+  args: {},
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Unauthenticated call to mutation");
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
+    if (!user) {
+      throw new Error("Unauthenticated call to mutation");
+    }
+    const recipesFav = await ctx.db
+      .query("recipes")
+      .order("desc")
+      .filter((q) => q.eq(q.field("userId"), user._id))
+      .filter((q) => q.eq(q.field("isFavorite"), true))
+      .collect();
+    return recipesFav;
+  },
+});
 
 export const getCurrentRecipe = query({
   args: { recipeId: v.string() },
@@ -89,19 +134,6 @@ export const getAllRecipe = query({
   handler: async (ctx, _) => {
     const allRecipes = await ctx.db.query("recipes").collect();
     return allRecipes;
-  },
-});
-
-export const getFavRecipe = query({
-  args: { userId: v.optional(v.string()) },
-  handler: async (ctx, args) => {
-    const recipesFav = await ctx.db
-      .query("recipes")
-      .order("desc")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
-      .filter((q) => q.eq(q.field("isFavorite"), true))
-      .collect();
-    return recipesFav;
   },
 });
 

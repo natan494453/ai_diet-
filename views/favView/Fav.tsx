@@ -11,19 +11,17 @@ interface Props {
 
 export default function Fav({ user }: Props) {
   const [serachQ, setserachQ] = useState<string>("");
-  const recipes = useQuery(api.tasks.getFavRecipe, {
-    userId: user,
-  });
+
   const addToFavHanlder = async (id: string) => {
     editFav(id);
   };
-  const filteredFav = recipes?.filter((item) => {
-    return item.title.includes(serachQ);
-  });
-  console.log(recipes);
+  // const filteredFav = recipes?.filter((item) => {
+  //   return item.title.includes(serachQ);
+  // });
+
   return (
     <div className="flex flex-col gap-10 items-center mt-10 ">
-      {recipes?.length < 1 ? (
+      {/* {recipes?.length < 1 ? (
         <div>אין מועדפים</div>
       ) : (
         <>
@@ -62,7 +60,7 @@ export default function Fav({ user }: Props) {
             );
           })}
         </>
-      )}
+      )} */}
     </div>
   );
 }

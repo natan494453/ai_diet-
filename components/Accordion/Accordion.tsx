@@ -1,18 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useModal } from "@/hooks/useModal";
-import Clerk, { useUser } from "@clerk/clerk-react";
-import { useConvexAuth } from "convex/react";
-
-import { useQuery, useMutation, Authenticated } from "convex/react";
+import { useUser } from "@clerk/clerk-react";
+import { useQuery, Authenticated } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { editFav } from "@/actions/iditFav";
 import { deleteRecipeHandler } from "@/actions/delRecipe";
 import { Id } from "@/convex/_generated/dataModel";
-import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
-export default function Accordion({ token }) {
-  const { isLoading, isAuthenticated } = useStoreUserEffect();
-
+export default function Accordion() {
   const deleteItem = async (id: Id<"recipes">) => {
     try {
       if (user && user.primaryEmailAddressId && data) {

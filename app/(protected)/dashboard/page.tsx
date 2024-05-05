@@ -15,41 +15,14 @@ export default async function page() {
 
   const user = await currentUser();
 
-  const data = await prisma.recipe.findMany({
-    where: { userId: user?.emailAddresses[0].id },
-    orderBy: { createdAt: "desc" },
-  });
-  const count = await prisma.recipe.aggregate({
-    _count: {
-      userId: true,
-    },
-    where: {
-      userId: user?.emailAddresses[0].id,
-    },
-  });
-  const countFav = await prisma.recipe.aggregate({
-    _count: {
-      isFavorite: true,
-    },
-    where: {
-      AND: {
-        userId: user?.emailAddresses[0].id,
-      },
-      isFavorite: true,
-    },
-  });
-
   return (
     <div className=" ">
-      <Stats
-        count={count._count.userId}
-        countFav={countFav._count.isFavorite}
-      />
+      <Stats />
       <div className="border-b-2 border-[#f1f1f15b]">
         <Chat token={token} />
       </div>{" "}
       <div className="border-b-2 border-[#f1f1f15b]">
-        <Accordion dataa={data} token={token} />
+        <Accordion token={token} />
       </div>
     </div>
   );
