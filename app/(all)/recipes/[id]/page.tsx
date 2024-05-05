@@ -1,5 +1,4 @@
 import React from "react";
-import { NextResponse, NextRequest } from "next/server";
 import { fetchMutation, fetchQuery } from "convex/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";

@@ -42,25 +42,15 @@ export default function Accordion() {
 
   const AuthCotant = () => {
     const recipes = useQuery(api.tasks.getRecipe);
+    const filterRecipes = recipes?.filter((item) => {
+      return item.title.includes(searchQuery);
+    });
     return (
       <div className="flex justify-center relative flex-col items-center gap-10">
-        {modal}
-
         <h2 className="text-center text-4xl font-bold mt-5">המתכונים שלך</h2>
-        <div className="flex items-center gap-3">
-          <input
-            type="text"
-            placeholder="חפש מתכון"
-            className="input input-bordered w-full max-w-xs"
-            id="search"
-            name="search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
 
         <div className="flex flex-col gap-10 w-[80vw] ">
-          {recipes?.map((item: any, index: number) => {
+          {filterRecipes?.map((item: any, index: number) => {
             return (
               <div
                 key={item.id}
@@ -107,8 +97,24 @@ export default function Accordion() {
   };
 
   return (
-    <Authenticated>
-      <AuthCotant />
-    </Authenticated>
+    <>
+      {modal}
+      <div className="flex justify-center mt-12 mb-8">
+        <div className="flex items-center gap-3">
+          <input
+            type="text"
+            placeholder="חפש מתכון"
+            className="input input-bordered w-full max-w-xs"
+            id="search"
+            name="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>{" "}
+      <Authenticated>
+        <AuthCotant />
+      </Authenticated>
+    </>
   );
 }
