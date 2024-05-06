@@ -7,7 +7,7 @@ export default function AllRecipe() {
   const AllRecipe = useQuery(api.tasks.getAllRecipe);
 
   return (
-    <div className="flex justify-center gap-10 max-lg:flex-wrap">
+    <div className="flex justify-center gap-10 flex-wrap">
       {AllRecipe?.map((item) => {
         const date = new Date(item._creationTime);
         const month = date.getMonth() + 1;
