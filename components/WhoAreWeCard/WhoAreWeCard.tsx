@@ -16,7 +16,7 @@ export default function WhoAreWeCard({ src, alt, iSRev }: props) {
           width={500}
           height={500}
           alt={alt}
-          className=" max-lg:w-[60%]  "
+          className=" w-[60%]   "
         />
       </figure>
       <div className={`card-body ${iSRev && "items-end"}   `}>
