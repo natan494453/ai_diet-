@@ -8,7 +8,7 @@ export default function NavBar() {
   useStoreUserEffect();
 
   return (
-    <div className=" z-[50000000000000000000000000] relative  ">
+    <div className=" z-[10] relative  ">
       <div className="navbar bg-base-300 lg:px-20 ">
         <div className="flex-1 ">
           <Link href={"/"}>
