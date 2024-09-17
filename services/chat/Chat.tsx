@@ -1,20 +1,30 @@
 "use client";
 import { useCompletion } from "ai/react";
-import React from "react";
+import React, { ChangeEvent } from "react";
 import DOMPurify from "isomorphic-dompurify";
-import Clerk, { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
-import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
-import { useAuth } from "@clerk/nextjs";
-export default function Chat({ token }) {
+
+export default function Chat({ token }: { token: string | undefined }) {
   const { user, isLoaded } = useUser();
   const [userMail, setUserImg] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (user) setUserImg(user.id);
   }, [user]);
-  console.log(userMail);
+
   const [isOK, setIsok] = useState<boolean | null>(false);
   const [isNotOK, setIsNotOK] = useState<boolean | null>(false);
+  const [isCaloriesClicked, setIsCaloriesClicked] = useState<boolean>(false);
+  const [calories, setCalories] = useState<number | null>(null);
+  const handleCaloreClick = () => {
+    setIsCaloriesClicked((prev) => {
+      return !prev;
+    });
+    if (isCaloriesClicked) setCalories(null);
+  };
+  const handleCaloreChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCalories(Number(e.target.value));
+  };
   const {
     completion,
     input,
@@ -23,7 +33,7 @@ export default function Chat({ token }) {
     handleInputChange,
     handleSubmit,
   } = useCompletion({
-    body: { userMail: userMail, img: user?.imageUrl, token: token },
+    body: { userMail: userMail, img: user?.imageUrl, token: token, calories },
   });
   const sentaized = DOMPurify?.sanitize(completion);
 
@@ -54,7 +64,7 @@ export default function Chat({ token }) {
         </div>
       </div>{" "}
       <div
-        className={`toast toast-top toast-center z-40 duration-200 ${
+        className={`toast toast-top top-[20%] toast-center z-40 duration-200 ${
           isNotOK ? " opacity-1" : " opacity-0"
         }`}
       >
@@ -76,6 +86,25 @@ export default function Chat({ token }) {
               placeholder={isLoading ? "..." : " כתוב שאלה על אוכל או מצרכים"}
               onChange={handleInputChange}
             />
+            <div className={`${isCaloriesClicked ? "static" : "hidden"}`}>
+              <input
+                type="number"
+                value={calories as number}
+                className="   border border-gray-300 rounded-xl  shadow-xl p-4"
+                placeholder={isLoading ? "..." : "  מספר קלוריות רצוי "}
+                onChange={handleCaloreChange}
+              />
+            </div>
+            <div className="form-control  lg:w-[20%]">
+              <label className="label cursor-pointer">
+                <span className="label-text text-xl"> עם מספר קלוריות</span>
+                <input
+                  onChange={handleCaloreClick}
+                  type="checkbox"
+                  className="checkbox checkbox-primary"
+                />
+              </label>
+            </div>
             <div className="flex justify-center gap-10  ">
               <div>
                 <button

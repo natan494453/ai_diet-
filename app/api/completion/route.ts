@@ -4,37 +4,73 @@ import prisma from "@/db/connect";
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 import { fetchMutation, fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
-import { preloadQuery } from "convex/nextjs";
 
 // IMPORTANT! Set the runtime to edge
 
 export async function POST(req: Request) {
-  const { prompt, userMail, img, token } = await req.json();
-
-  const recipe = `
-    if you dont see here : [${prompt}] food ingredients or a question about food so you will say that you cant answer!
-    else:
-    i need you to write a recipe with this ingredients ${prompt} or answer the question
-    in this format:
-    <h1>recipe name : recipe name</h1> 
+  const { prompt, userMail, img, token, calories } = await req.json();
+  console.log(prompt);
+  console.log(calories);
+  let recipe;
+  if (calories === null) {
+    recipe = `
+    אם אתה לא רואה כאן: ${prompt} מרכיבים של האוכל או שאלה על אוכל אז תגיד שאתה לא יכול לענות!
+    אחרת:
+    אני צריך שתכתוב מתכון עם המרכיבים האלו ${prompt} או תענה על השאלה
+    בפורמט הבא:
+    <h1>שם המתכון: שם המתכון</h1> 
     <br/>
     <br/>
-    ingredients :
+    מרכיבים:
     <br/>
-    ingredient 1: ingredient 1
+    מרכיב 1: מרכיב 1
     <br/>
-    ingredient 2: ingredient 2
+    מרכיב 2: מרכיב 2
     <br/>
     <br/>
-    instructions :
+    הוראות הכנה:
     <br/>
-    1. instructions : ...
+    1. הוראות: ...
     <br/>
-    2. instructions  : ... 
-    all in hebrew
-    and in html
-    i need exact measurements and portion sizes
+    2. הוראות: ... 
+    הכל בעברית
+    וב-HTML
+    תוסיף שורה חדשה אחרי כל הוראה
+    אני צריך כמויות מדויקות וגודל מנות
   `;
+  } else {
+    recipe = `  אם אתה לא רואה כאן: ${prompt} מרכיבים של האוכל או שאלה על אוכל אז תגיד שאתה לא יכול לענות!
+    אחרת:
+    אני צריך שתכתוב מתכון עם המרכיבים האלו ${prompt} או תענה על השאלה
+    בכל שלב תגיד לי כמה קלוריות יש שם
+    ואל תעבור על ${calories}
+    
+    בפורמט הבא:
+    <h1>שם המתכון: שם המתכון</h1> 
+    <br/>
+    <br/>
+    מרכיבים:
+    <br/>
+    מרכיב 1: מרכיב 1
+    <br/>
+    מרכיב 2: מרכיב 2
+    <br/>
+    <br/>
+    הוראות הכנה:
+    <br/>
+    1. הוראות: ...
+    <br/>
+    2. הוראות: ... 
+    בסוף תכתוב לי כמה קלוריות יש במנה הכוללת
+    וכמה פחמימות, חלבון ושומנים
+    הכל בעברית
+    וב-HTML
+    תוסיף שורה חדשה אחרי כל הוראה
+    תיכתוב כמה קלריות חלבון פיחממות ושומן יש בסוף
+    אני צריך כמויות מדויקות וגודל מנות`;
+  }
+
+  console.log(recipe);
   // Ask Google Generative AI for a streaming completion given the prompt
   const response = await genAI
     .getGenerativeModel({ model: "gemini-pro" })

@@ -65,7 +65,7 @@ export default function Accordion() {
                   {item.title}
                 </div>
                 <div
-                  className="collapse-content "
+                  className="collapse-content flex flex-col gap-5 "
                   dangerouslySetInnerHTML={{ __html: item.recipe }}
                 ></div>{" "}
                 <button

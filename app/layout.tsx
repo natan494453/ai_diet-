@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <ConvexClientProvider>
-      <html lang="en" dir="rtl" data-theme="dark">
+      <html lang="en" dir="rtl" data-theme="dark" className="page">
         <body className={inter.className}>
           <StoreProvider>
             <NavBar /> {children}
