@@ -10,7 +10,7 @@ export default async function page({ params }: { params: { id: string } }) {
   });
 
   return (
-    <div className="flex justify-center items-center h-[70vh] max-lg:mt-[70%]">
+    <div className="flex justify-center items-center  ">
       {recepit.map((item) => {
         return (
           <div
