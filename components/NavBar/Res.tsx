@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Res() {
   const [isHam, setIsHam] = useState(false);
   return (
-    <div className=" lg:hidden ">
+    <div className=" lg:hidden z-[20] ">
       <div>
         <button
           onClick={() => {

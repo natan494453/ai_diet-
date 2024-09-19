@@ -30,7 +30,7 @@ export default function Stats() {
     return <div className="stat-value">{user?.count}</div>;
   };
   return (
-    <div className="stats shadow  w-[99vw] max-lg:mt-2">
+    <div className="stats shadow  w-[99vw] max-lg:mt-2 relative z-0">
       <div className="flex items-center justify-around">
         <div className="text-secondary">
           <div className="avatar online">

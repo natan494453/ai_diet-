@@ -90,6 +90,7 @@ export default function Chat({ token }: { token: string | undefined }) {
               <input
                 type="number"
                 value={calories as number}
+                min={1}
                 className="   border border-gray-300 rounded-xl  shadow-xl p-4"
                 placeholder={isLoading ? "..." : "  מספר קלוריות רצוי "}
                 onChange={handleCaloreChange}

@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, StreamingTextResponse } from "ai";
-import prisma from "@/db/connect";
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 import { fetchMutation, fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
@@ -9,8 +8,6 @@ import { api } from "@/convex/_generated/api";
 
 export async function POST(req: Request) {
   const { prompt, userMail, img, token, calories } = await req.json();
-  console.log(prompt);
-  console.log(calories);
   let recipe;
   if (calories === null) {
     recipe = `
@@ -67,7 +64,6 @@ export async function POST(req: Request) {
     אני צריך כמויות מדויקות וגודל מנות`;
   }
 
-  console.log(recipe);
   // Ask Google Generative AI for a streaming completion given the prompt
   const response = await genAI
     .getGenerativeModel({ model: "gemini-pro" })
@@ -75,7 +71,8 @@ export async function POST(req: Request) {
       contents: [{ role: "user", parts: [{ text: recipe }] }],
     });
 
-  // Convert the response into a friendly text-stream
+  // Convert the response into a friendly tex-stream
+
   const stream = GoogleGenerativeAIStream(response, {
     onCompletion: async (completion: string) => {
       const regex = /<h1>(.*?)<\/h1>/;

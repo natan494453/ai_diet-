@@ -15,7 +15,6 @@ export default function NavBar() {
             <p className="btn btn-ghost text-xl">דיאטה AI</p>
           </Link>
           <label className="swap swap-rotate mr-10">
-            {/* this hidden checkbox controls the state */}
             <input
               type="checkbox"
               className="theme-controller"
