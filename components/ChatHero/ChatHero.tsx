@@ -1,16 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/lib/store";
-import { setWidthAndHeight } from "@/lib/features/windowSize";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { useTypeWriter } from "@/hooks/useTypeWriter";
+
 export default function ChatHero() {
   const { width, height } = useSelector(
     (state: RootState) => state.WindowSizeStates
   );
-  const [typedTextUser, setTypedTextUser] = useState("");
-  const [typedTextAI, setTypedTextAI] = useState("");
-  const userText = "בבצל,פסטה,רוטב עגבניות,גבינה";
-  const lastText = `ההנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
+
+  const userText = "בצל,פסטה,רוטב עגבניות,גבינה";
+  const lastText = `הנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
     מרכיבים:<br />
     250 גרם פסטה<br />
     1 בצל גדול , קצוץ<br />
@@ -31,40 +31,23 @@ export default function ChatHero() {
     9. גישה חמה וציפו בפרמזן מגורר.<br />
     בתיאבון!`;
 
-  useEffect(() => {
-    let i = 0;
-    const typingIntervalUser = setInterval(() => {
-      if (i < userText.length - 1) {
-        setTypedTextUser((prevTypedText) => prevTypedText + userText[i]);
-        i++;
-      } else {
-        clearInterval(typingIntervalUser);
-        let j = 0;
-        const typingIntervalAI = setInterval(() => {
-          if (j < lastText.length - 1) {
-            if (width) {
-              if (width < 600 && j === 50) {
-                clearInterval(typingIntervalAI); // Stop typing based on condition
-                return;
-              }
-            }
-            setTypedTextAI((prevTypedText) => prevTypedText + lastText[j]);
-            j++;
-          } else {
-            clearInterval(typingIntervalAI);
-          }
-        }, 15);
-      }
-    }, 50);
+  const writeUserText = useTypeWriter(userText, 80);
 
-    return () => {
-      clearInterval(typingIntervalUser);
-    };
-  }, []);
+  const [writeAiText, setWriteAiText] = useState("");
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setWriteAiText(lastText);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [lastText]);
+
+  const typedAiText = useTypeWriter(writeAiText, 60);
 
   return (
     <div className="flex justify-center mt-20 max-lg:hidden min-h-[570px]">
-      <div className="lg:w-[50vw] bg-base-300 rounded-xl p-6 ">
+      <div className="lg:w-[50vw] bg-base-300 rounded-xl p-6">
         <div className="chat chat-start">
           <div className="chat-image avatar">
             <div className="w-10 rounded-full">
@@ -78,7 +61,7 @@ export default function ChatHero() {
             נתן
             <time className="text-xs opacity-50"> 12:45</time>
           </div>
-          <div className="chat-bubble">{typedTextUser}</div>
+          <div className="chat-bubble">{writeUserText}</div>
         </div>
         <div className="chat chat-end">
           <div className="chat-image avatar">
@@ -95,7 +78,9 @@ export default function ChatHero() {
           </div>
           <div
             className="chat-bubble"
-            dangerouslySetInnerHTML={{ __html: typedTextAI }}
+            dangerouslySetInnerHTML={{
+              __html: typedAiText || "...", // Show AI typing effect or placeholder
+            }}
           ></div>
         </div>
       </div>
