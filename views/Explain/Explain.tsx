@@ -8,7 +8,7 @@ export default function Explain() {
           איך מתחילים
         </h2>
       </div>
-      <div className="flex justify-around max-lg:flex-col items-center">
+      <div className="flex justify-around max-lg:flex-col items-center flex-wrap">
         <Card
           title={"הרשמה"}
           explain={"ניתן להירשם בקלות עיל ידי לחיצה על התחבר או נסה עכשיו"}

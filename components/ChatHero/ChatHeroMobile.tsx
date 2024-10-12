@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useTypeWriter } from "@/hooks/useTypeWriter";
 import { RootState } from "@/lib/store";
 export default function ChatHeroMobile() {
   const { width, height } = useSelector(
     (state: RootState) => state.WindowSizeStates
   );
-  const [typedTextUser, setTypedTextUser] = useState("");
-  const [typedTextAI, setTypedTextAI] = useState("");
-  const userText = "בבצל,פסטה,רוטב עגבניות,גבינה";
+
+  const userText = "בצל,פסטה,רוטב עגבניות,גבינה";
   const lastText = `הנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
     מרכיבים:<br />
     250 גרם פסטה<br />
@@ -29,31 +29,19 @@ export default function ChatHeroMobile() {
     8. הוסיפו מלח ופלפל לפי הטעם.<br />
     9. גישה חמה וציפו בפרמזן מגורר.<br />
     בתיאבון!`;
+  const writeUserText = useTypeWriter(userText, 80);
+
+  const [writeAiText, setWriteAiText] = useState("");
 
   useEffect(() => {
-    let i = 0;
-    const typingIntervalUser = setInterval(() => {
-      if (i < userText.length - 1) {
-        setTypedTextUser((prevTypedText) => prevTypedText + userText[i]);
-        i++;
-      } else {
-        clearInterval(typingIntervalUser);
-        let j = 0;
-        const typingIntervalAI = setInterval(() => {
-          if (j < lastText.length / 2.8) {
-            setTypedTextAI((prevTypedText) => prevTypedText + lastText[j]);
-            j++;
-          } else {
-            clearInterval(typingIntervalAI);
-          }
-        }, 40);
-      }
-    }, 50);
+    const timeout = setTimeout(() => {
+      setWriteAiText(lastText);
+    }, 2000);
 
-    return () => {
-      clearInterval(typingIntervalUser);
-    };
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [lastText]);
+
+  const typedAiText = useTypeWriter(writeAiText, 60);
 
   return (
     <div className="flex justify-center mt-20 lg:hidden ">
@@ -71,7 +59,7 @@ export default function ChatHeroMobile() {
             נתן
             <time className="text-xs opacity-50"> 12:45</time>
           </div>
-          <div className="chat-bubble">{typedTextUser}</div>
+          <div className="chat-bubble">{writeUserText}</div>
         </div>
         <div className="chat chat-end">
           <div className="chat-image avatar">
@@ -88,7 +76,7 @@ export default function ChatHeroMobile() {
           </div>
           <div
             className="chat-bubble"
-            dangerouslySetInnerHTML={{ __html: typedTextAI }}
+            dangerouslySetInnerHTML={{ __html: typedAiText }}
           ></div>
         </div>
       </div>

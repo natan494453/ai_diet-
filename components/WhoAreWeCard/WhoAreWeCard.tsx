@@ -4,8 +4,16 @@ interface props {
   src: string;
   alt: string;
   iSRev: boolean;
+  title: string;
+  description: string;
 }
-export default function WhoAreWeCard({ src, alt, iSRev }: props) {
+export default function WhoAreWeCard({
+  src,
+  alt,
+  iSRev,
+  title,
+  description,
+}: props) {
   return (
     <div
       className={`card card-side bg-base-100 shadow-xl hover:bg-base-200 ${iSRev && "flex-row-reverse"} px-10 max-lg:flex-col   `}
@@ -19,9 +27,11 @@ export default function WhoAreWeCard({ src, alt, iSRev }: props) {
           className=" w-[60%]   "
         />
       </figure>
-      <div className={`card-body ${iSRev && "items-end"}   `}>
-        <h2 className="card-title ">New movie is released!</h2>
-        <p>Click the button to watch on Jetflix app.</p>
+      <div className={`card-body  lg:h-[200px] max-lg:text-center `}>
+        <h2 className="lg:card-title text-center max-lg:font-bold text-xl mb-2">
+          {title}
+        </h2>
+        <p className="lg:w-[70%]">{description}</p>
       </div>
     </div>
   );

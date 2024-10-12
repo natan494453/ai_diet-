@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import WhoAreWeCard from "@/components/WhoAreWeCard/WhoAreWeCard";
+import { aboutUsText } from "@/constants/text";
 export default function WhoAreWe() {
   return (
     <div className=" bg-base-300 mt-10 relative pb-10">
@@ -41,21 +42,18 @@ export default function WhoAreWe() {
       </div>
       <div className=" flex justify-center mt-20">
         <div className=" max-lg:w-screen w-[80vw] flex flex-col gap-10">
-          <WhoAreWeCard
-            iSRev={false}
-            alt={"test"}
-            src={"/WhoAreWe/feature-fridge.png"}
-          />
-          <WhoAreWeCard
-            alt={"test"}
-            src={"/WhoAreWe/feature-plate.png"}
-            iSRev={true}
-          />
-          <WhoAreWeCard
-            iSRev={false}
-            alt={"test"}
-            src={"/WhoAreWe/feature-planner.png"}
-          />
+          {aboutUsText.map((item, index) => {
+            return (
+              <WhoAreWeCard
+                key={item.title}
+                iSRev={index % 2 === 0 ? true : false}
+                src={item.img}
+                alt={item.alt}
+                title={item.title}
+                description={item.description}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
