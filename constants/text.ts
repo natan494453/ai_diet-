@@ -1,3 +1,4 @@
+import z from "zod";
 export const aboutUsText = [
   {
     title: "מתכונים בהתאמה אישית",
@@ -22,3 +23,24 @@ export const aboutUsText = [
     alt: "plan icon",
   },
 ];
+
+export const recipeSchema = z.object({
+  title: z.string().describe("שם המתכון"),
+  description: z.string().optional().describe("תיאור קצר של המתכון"),
+  ingredients: z
+    .array(
+      z.object({
+        name: z.string().describe("שם המרכיב"),
+        quantity: z.string().describe("כמות המרכיב, למשל '1 כוס' או '2 כפות'"),
+      })
+    )
+    .describe("רשימת מרכיבים עם כמויות "),
+  instructions: z.array(z.string()).describe("הוראות הכנה שלב-אחר-שלב"),
+  prepTime: z.string().describe("זמן הכנה, למשל '15 דקות'"),
+  cookTime: z.string().describe("זמן בישול, למשל '30 דקות'"),
+  servings: z.number().describe("מספר מנות"),
+  tags: z
+    .array(z.string())
+    .optional()
+    .describe("תגיות כמו 'טבעוני', 'ללא גלוטן', וכדומה"),
+});

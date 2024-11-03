@@ -1,7 +1,6 @@
 import Chat from "@/services/chat/Chat";
 import Stats from "@/components/StatsCard/Stats";
 import Accordion from "@/components/Accordion/Accordion";
-import prisma from "@/db/connect";
 import { auth } from "@clerk/nextjs/server";
 
 import type { Metadata } from "next";

@@ -1,13 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useTypeWriter } from "@/hooks/useTypeWriter";
-import { RootState } from "@/lib/store";
 export default function ChatHeroMobile() {
-  const { width, height } = useSelector(
-    (state: RootState) => state.WindowSizeStates
-  );
-
   const userText = "בצל,פסטה,רוטב עגבניות,גבינה";
   const lastText = `הנה מתכון פשוט לפסטה עם רוטב עגבניות, בצל וגבינה:
     מרכיבים:<br />

@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import NavBar from "@/components/NavBar/NavBar";
 import "./globals.css";
 
-import StoreProvider from "./StoreProvider";
 import ConvexClientProvider from "./ConvexClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,9 +21,7 @@ export default function RootLayout({
     <ConvexClientProvider>
       <html lang="en" dir="rtl" data-theme="dark" className="page">
         <body className={inter.className}>
-          <StoreProvider>
-            <NavBar /> {children}
-          </StoreProvider>
+          <NavBar /> {children}
         </body>
       </html>
     </ConvexClientProvider>
