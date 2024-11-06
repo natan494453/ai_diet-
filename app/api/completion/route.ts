@@ -124,7 +124,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   // const { prompt, userMail, img, token, calories, context } = await req.json();
   // console.log(context);
-  const test = await req.json();
+  const body = await req.json();
   let recipe;
   // if (calories === null) {
   //   recipe = `
@@ -189,7 +189,7 @@ export async function POST(req: Request) {
   const result = await streamObject({
     model: google("gemini-1.5-flash"),
     schema: recipeSchema,
-    prompt: test.recipe,
+    prompt: body.recipe,
   });
   // try {
   //   if (!user || !test.token) {
@@ -204,11 +204,25 @@ export async function POST(req: Request) {
   // } catch (error) {
   //   return NextResponse.json({ error: error });
   // }
-  const user = await fetchQuery(api.tasks.user, {}, { token: test.token });
+  const user = await fetchQuery(api.tasks.user, {}, { token: body.token });
   console.log(user);
   await fetchMutation(api.tasks.addCount, {
     userId: user._id,
     count: user.count + 1,
   });
+  // try {
+  //   await fetchMutation(api.tasks.createRecipe, {
+  //     title: (await result.object).title,
+  //     instructions: (await result.object).instructions,
+  //     ingredients: (await result.object).ingredients,
+  //     cookTime: (await result.object).cookTime,
+  //     isFavorite: false,
+  //     prepTime: (await result.object).prepTime,
+  //     servings: (await result.object).servings,
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
+
   return result.toTextStreamResponse();
 }

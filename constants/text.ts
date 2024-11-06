@@ -26,7 +26,6 @@ export const aboutUsText = [
 
 export const recipeSchema = z.object({
   title: z.string().describe("שם המתכון"),
-  description: z.string().optional().describe("תיאור קצר של המתכון"),
   ingredients: z
     .array(
       z.object({
@@ -39,8 +38,8 @@ export const recipeSchema = z.object({
   prepTime: z.string().describe("זמן הכנה, למשל '15 דקות'"),
   cookTime: z.string().describe("זמן בישול, למשל '30 דקות'"),
   servings: z.number().describe("מספר מנות"),
-  tags: z
-    .array(z.string())
-    .optional()
-    .describe("תגיות כמו 'טבעוני', 'ללא גלוטן', וכדומה"),
+  // tags: z
+  //   .array(z.string())
+  //   .optional()
+  //   .describe("תגיות כמו 'טבעוני', 'ללא גלוטן', וכדומה"),
 });

@@ -3,7 +3,20 @@ import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
 
 export const createRecipe = mutation({
-  args: { title: v.string(), recipe: v.string(), isFavorite: v.boolean() },
+  args: {
+    title: v.string(),
+    isFavorite: v.boolean(),
+    instructions: v.array(v.string()),
+    prepTime: v.string(),
+    servings: v.number(),
+    cookTime: v.string(),
+    ingredients: v.array(
+      v.object({
+        name: v.string(), // Ingredient name
+        quantity: v.string(), // Quantity, e.g., "1 cup", "2 tbsp"
+      })
+    ),
+  },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -20,7 +33,11 @@ export const createRecipe = mutation({
     }
     await ctx.db.insert("recipes", {
       isFavorite: args.isFavorite,
-      recipe: args.recipe,
+      ingredients: args.ingredients,
+      cookTime: args.cookTime,
+      instructions: args.instructions,
+      prepTime: args.prepTime,
+      servings: args.servings,
       title: args.title,
       userId: user._id,
     });

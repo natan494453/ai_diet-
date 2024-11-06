@@ -6,6 +6,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import { experimental_useObject as useObject } from "ai/react";
 import { recipeSchema } from "@/constants/text";
+import { addRecipeHandler, recipeTypes } from "@/actions/addRecipe";
 
 export default function Chat({ token }: { token: string | undefined }) {
   const { user, isLoaded } = useUser();
@@ -19,6 +20,7 @@ export default function Chat({ token }: { token: string | undefined }) {
   const [isCaloriesClicked, setIsCaloriesClicked] = useState<boolean>(false);
   const [calories, setCalories] = useState<number | null>(null);
   const [recipe, setRecipe] = useState<string | null>(null);
+  const [fullObject, setFullObject] = useState<recipeTypes>();
   const handleCaloreClick = () => {
     setIsCaloriesClicked((prev) => {
       return !prev;
@@ -31,9 +33,11 @@ export default function Chat({ token }: { token: string | undefined }) {
   const { isLoading, stop, object, submit } = useObject({
     api: "/api/completion",
     schema: recipeSchema,
+    onFinish(event) {
+      addRecipeHandler(event.object as recipeTypes, token);
+    },
   });
 
-  console.log(object);
   return (
     <div className=" border-b-2 border-[#f1f1f15b] flex justify-center pb-4 mt-10 ">
       <div
@@ -56,7 +60,7 @@ export default function Chat({ token }: { token: string | undefined }) {
       </div>
       <div className="    flex flex-col w-[80%]  ">
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
             submit({
               userMail: userMail,
