@@ -56,36 +56,35 @@ export default function Accordion() {
       <div className="flex  relative flex-col  gap-10">
         <h2 className="text-center text-4xl font-bold mt-5">המתכונים שלך</h2>
 
-        <div className="flex gap-6  flex-wrap justify-center max-lg:flex-col">
+        <div className="flex gap-6 flex-wrap justify-center max-lg:flex-col  py-10 min-h-screen">
           {filterRecipes?.map((item: recipeTypeEach, index: number) => (
             <div
               key={item._id}
-              className=" bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105 hover:shadow-xl lg:w-[30vw] "
+              className="bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform hover:scale-105 hover:shadow-2xl lg:w-[30vw] w-full h-max"
             >
               {/* Accordion Header with Recipe Title */}
-
-              <div className=" flex justify-between items-center p-5 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white text-lg font-semibold">
+              <div className="flex justify-between items-center p-6 bg-gradient-to-r from-purple-700 via-pink-600 to-red-600 text-white text-xl font-bold">
                 <span>{item.title}</span>
-                <span className="text-sm">
+                <span className="text-sm opacity-80">
                   {item.cookTime} • {item.servings} מנות
                 </span>
               </div>
 
               {/* Recipe Content */}
-              <div className="p-6 space-y-4">
+              <div className="p-8 space-y-6">
                 {/* Ingredients */}
                 <div>
-                  <h3 className="text-gray-700 font-medium text-lg mb-2">
+                  <h3 className="text-gray-200 font-semibold text-lg mb-3">
                     מצרכים:
                   </h3>
-                  <ul className="space-y-1 text-gray-600">
+                  <ul className="space-y-2 text-gray-300 leading-relaxed">
                     {item.ingredients.map((ingredient, idx) => (
                       <li
                         key={idx}
                         className="flex justify-between items-center"
                       >
                         <span className="font-medium">{ingredient.name}</span>
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-gray-400">
                           {ingredient.quantity}
                         </span>
                       </li>
@@ -95,12 +94,12 @@ export default function Accordion() {
 
                 {/* Instructions */}
                 <div>
-                  <h3 className="text-gray-700 font-medium text-lg mb-2">
+                  <h3 className="text-gray-200 font-semibold text-lg mb-3">
                     הוראות הכנה:
                   </h3>
-                  <ol className="list-decimal list-inside space-y-2 text-gray-600 pl-4">
+                  <ol className="list-decimal list-inside space-y-3 text-gray-300 pl-4 leading-relaxed">
                     {item.instructions.map((instruction, idx) => (
-                      <li key={idx} className="text-sm">
+                      <li key={idx} className="text-base">
                         {instruction}
                       </li>
                     ))}
@@ -109,10 +108,10 @@ export default function Accordion() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center justify-between p-5 border-t bg-gray-50">
+              <div className="flex items-center justify-between p-6 border-t border-gray-700 bg-gray-800">
                 <button
                   onClick={() => openModal(item.title, item._id)}
-                  className="bg-red-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-red-600 transition"
+                  className="bg-red-600 text-white py-3 px-6 rounded-md shadow-md hover:bg-red-700 transition font-semibold"
                 >
                   מחק
                 </button>
@@ -120,10 +119,10 @@ export default function Accordion() {
                 <button
                   disabled={isFavLoading}
                   onClick={() => addToFavHanlder(item._id)}
-                  className={`py-2 px-4 rounded-md shadow-md transition ${
+                  className={`py-3 px-6 rounded-md shadow-md font-semibold transition ${
                     item.isFavorite
-                      ? "bg-yellow-400 text-yellow-900 hover:bg-yellow-500"
-                      : "bg-green-500 text-white hover:bg-green-600"
+                      ? "bg-yellow-500 text-gray-900 hover:bg-yellow-600"
+                      : "bg-green-600 text-white hover:bg-green-700"
                   }`}
                 >
                   {item.isFavorite ? "הסר ממעודפים" : "הוסף למעודפים"}
