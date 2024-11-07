@@ -7,12 +7,12 @@ const isFavoriteRoute = createRouteMatcher(["/favorite(.*)"]);
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   // Restrict admin route to users with specific role
-  if (isAdminRoute(req)) auth().protect({ role: "org:admin" });
+  if (isAdminRoute(req)) await auth.protect({ role: "org:admin" });
 
   // Restrict dashboard routes to signed in users
-  if (isDashboardRoute(req) || isFavoriteRoute(req)) auth().protect();
+  if (isDashboardRoute(req) || isFavoriteRoute(req)) await auth.protect();
 });
 
 export const config = {
