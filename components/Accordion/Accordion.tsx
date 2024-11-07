@@ -7,6 +7,12 @@ import { api } from "@/convex/_generated/api";
 import { editFav } from "@/actions/iditFav";
 import { deleteRecipeHandler } from "@/actions/delRecipe";
 import { Id } from "@/convex/_generated/dataModel";
+import { recipeTypes } from "@/actions/addRecipe";
+interface recipeTypeEach extends recipeTypes {
+  userId: string;
+  _creationTime: number;
+  _id: Id<"recipes">;
+}
 export default function Accordion() {
   const deleteItem = async (id: Id<"recipes">) => {
     try {
@@ -45,47 +51,90 @@ export default function Accordion() {
     const filterRecipes = recipes?.filter((item) => {
       return item.title.includes(searchQuery);
     });
+
     return (
       <div className="flex justify-center relative flex-col items-center gap-10">
         <h2 className="text-center text-4xl font-bold mt-5">המתכונים שלך</h2>
 
-        <div className="flex flex-col gap-10 w-[80vw] ">
-          {filterRecipes?.map((item: any, index: number) => {
-            return (
-              <div
-                key={item.id}
-                className="collapse bg-base-200 mb-10 max-lg:pb-14"
-              >
-                <input
-                  type="radio"
-                  name="my-accordion-1"
-                  defaultChecked={index === 0}
-                />
-                <div className="collapse-title text-xl font-medium ">
-                  {item.title}
+        <div className="flex flex-col gap-6 w-[85vw] max-w-3xl mx-auto my-10">
+          {filterRecipes?.map((item: recipeTypeEach, index: number) => (
+            <div
+              key={item._id}
+              className="collapse bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105 hover:shadow-xl"
+            >
+              {/* Accordion Header with Recipe Title */}
+              <input
+                type="radio"
+                name="my-accordion-1"
+                defaultChecked={index === 0}
+              />
+              <div className="collapse-title flex justify-between items-center p-5 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white text-lg font-semibold">
+                <span>{item.title}</span>
+                <span className="text-sm">
+                  {item.cookTime} • {item.servings} מנות
+                </span>
+              </div>
+
+              {/* Recipe Content */}
+              <div className="p-6 space-y-4">
+                {/* Ingredients */}
+                <div>
+                  <h3 className="text-gray-700 font-medium text-lg mb-2">
+                    מצרכים:
+                  </h3>
+                  <ul className="space-y-1 text-gray-600">
+                    {item.ingredients.map((ingredient, idx) => (
+                      <li
+                        key={idx}
+                        className="flex justify-between items-center"
+                      >
+                        <span className="font-medium">{ingredient.name}</span>
+                        <span className="text-sm text-gray-500">
+                          {ingredient.quantity}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div
-                  className="collapse-content flex flex-col gap-5 "
-                  dangerouslySetInnerHTML={{ __html: item.recipe }}
-                ></div>{" "}
+
+                {/* Instructions */}
+                <div>
+                  <h3 className="text-gray-700 font-medium text-lg mb-2">
+                    הוראות הכנה:
+                  </h3>
+                  <ol className="list-decimal list-inside space-y-2 text-gray-600 pl-4">
+                    {item.instructions.map((instruction, idx) => (
+                      <li key={idx} className="text-sm">
+                        {instruction}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-between p-5 border-t bg-gray-50">
                 <button
                   onClick={() => openModal(item.title, item._id)}
-                  className="collapse-content btn cursor-pointer btn-error absolute lg:top-0  bottom-0 lg:left-[0%] max-lg:left-0   flex items-center justify-center z-50 pt-3 w-[40%] lg:w-[123px]"
+                  className="bg-red-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-red-600 transition"
                 >
                   מחק
                 </button>
+
                 <button
                   disabled={isFavLoading}
-                  onClick={() => {
-                    addToFavHanlder(item._id);
-                  }}
-                  className="collapse-content btn btn-success lg:top-0 absolute bottom-0 left-[10%]  items-center z-50 pt-3 max-lg:right-0 lg:w-[123px] w-[40%] cursor-pointer"
+                  onClick={() => addToFavHanlder(item._id)}
+                  className={`py-2 px-4 rounded-md shadow-md transition ${
+                    item.isFavorite
+                      ? "bg-yellow-400 text-yellow-900 hover:bg-yellow-500"
+                      : "bg-green-500 text-white hover:bg-green-600"
+                  }`}
                 >
-                  {item.isFavorite ? "    הסר ממעודפים" : "    הוסף למעודפים"}
+                  {item.isFavorite ? "הסר ממעודפים" : "הוסף למעודפים"}
                 </button>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     );

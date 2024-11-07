@@ -5,11 +5,12 @@ import { NextResponse } from "next/server";
 import { api } from "@/convex/_generated/api";
 export interface recipeTypes {
   title: string;
-  ingredients: [{ name: string; quantity: string }];
-  instructions: [string];
+  ingredients: { name: string; quantity: string }[];
+  instructions: string[];
   prepTime: string;
   cookTime: string;
   servings: number;
+  isFavorite: boolean;
 }
 export const addRecipeHandler = async (
   recipe: recipeTypes,
@@ -31,5 +32,5 @@ export const addRecipeHandler = async (
       token: token,
     }
   );
-  return NextResponse.json({ msg: "hello" });
+  return NextResponse.json({ msg: "Ok", status: 201 });
 };
