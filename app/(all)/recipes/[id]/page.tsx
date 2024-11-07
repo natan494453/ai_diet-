@@ -2,7 +2,8 @@ import React from "react";
 import { fetchMutation, fetchQuery } from "convex/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";
-export default async function page({ params }: { params: { id: string } }) {
+export default async function page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
 
   const recepit = await fetchQuery(api.tasks.getCurrentRecipe, {

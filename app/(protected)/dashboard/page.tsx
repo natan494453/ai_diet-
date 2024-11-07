@@ -9,8 +9,10 @@ export const metadata: Metadata = {
   title: "מתכונים",
   description: "מתכונים",
 };
-export default async function page() {
-  const token = (await auth().getToken({ template: "convex" })) ?? undefined;
+
+export default async function Page() {
+  const { getToken } = await auth();
+  const token = (await getToken({ template: "convex" })) ?? undefined;
 
   return (
     <div className=" ">
