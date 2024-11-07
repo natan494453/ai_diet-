@@ -53,22 +53,18 @@ export default function Accordion() {
     });
 
     return (
-      <div className="flex justify-center relative flex-col items-center gap-10">
+      <div className="flex  relative flex-col  gap-10">
         <h2 className="text-center text-4xl font-bold mt-5">המתכונים שלך</h2>
 
-        <div className="flex flex-col gap-6 w-[85vw] max-w-3xl mx-auto my-10">
+        <div className="flex gap-6  flex-wrap justify-center max-lg:flex-col">
           {filterRecipes?.map((item: recipeTypeEach, index: number) => (
             <div
               key={item._id}
-              className="collapse bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105 hover:shadow-xl"
+              className=" bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105 hover:shadow-xl lg:w-[30vw] "
             >
               {/* Accordion Header with Recipe Title */}
-              <input
-                type="radio"
-                name="my-accordion-1"
-                defaultChecked={index === 0}
-              />
-              <div className="collapse-title flex justify-between items-center p-5 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white text-lg font-semibold">
+
+              <div className=" flex justify-between items-center p-5 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white text-lg font-semibold">
                 <span>{item.title}</span>
                 <span className="text-sm">
                   {item.cookTime} • {item.servings} מנות
