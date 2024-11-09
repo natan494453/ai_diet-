@@ -13,11 +13,7 @@ export default clerkMiddleware(async (auth, req) => {
 });
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image).*)",
-    "/",
-    "/(api|trpc)(.*),/(he|en)/:path",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image).*)", "/"],
 };
 // middleware.ts
 // import { chain } from "@/middlewares/chain";
