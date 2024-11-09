@@ -20,7 +20,6 @@ export default function Chat({ token }: { token: string | undefined }) {
   const [isCaloriesClicked, setIsCaloriesClicked] = useState<boolean>(false);
   const [calories, setCalories] = useState<number | null>(null);
   const [recipe, setRecipe] = useState<string | null>(null);
-  const [fullObject, setFullObject] = useState<recipeTypes>();
   const handleCaloreClick = () => {
     setIsCaloriesClicked((prev) => {
       return !prev;
@@ -35,6 +34,10 @@ export default function Chat({ token }: { token: string | undefined }) {
     schema: recipeSchema,
     onFinish(event) {
       addRecipeHandler(event.object as recipeTypes, token);
+      setIsok(true);
+      setTimeout(() => {
+        setIsok(false);
+      }, 3000);
     },
   });
 

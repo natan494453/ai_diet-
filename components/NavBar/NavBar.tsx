@@ -1,18 +1,20 @@
 "use client";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
+import { useTranslations } from "next-intl";
 
 import Link from "next/link";
 import Res from "./Res";
 export default function NavBar() {
   useStoreUserEffect();
+  const t = useTranslations("NavBar");
 
   return (
     <div className=" z-[10] relative  ">
       <div className="navbar bg-base-300 lg:px-20 ">
         <div className="flex-1 ">
           <Link href={"/"}>
-            <p className="btn btn-ghost text-xl">דיאטה AI</p>
+            <p className="btn btn-ghost text-xl">{t("title")}</p>
           </Link>
           <label className="swap swap-rotate mr-10">
             <input
@@ -41,22 +43,22 @@ export default function NavBar() {
         <div className="flex-none gap-20 ">
           <Link href={"/recipes"}>
             <button className=" btn btn-ghost text-xl max-lg:hidden">
-              יצירות
+              {t("all-creations")}
             </button>
           </Link>
           <SignedOut>
             <Link href={"/sign-in"}>
-              <button className=" btn btn-accent">התחבר</button>
+              <button className=" btn btn-accent">{t("sign-in")}</button>
             </Link>
           </SignedOut>
 
           <SignedIn>
             <div className=" text-xl flex gap-20 max-lg:hidden">
               <Link href={"/dashboard"}>
-                <p className="btn btn-ghost text-xl">מתכונים</p>
+                <p className="btn btn-ghost text-xl">{t("recipes")}</p>
               </Link>
               <Link href={"/favorite"}>
-                <p className="btn btn-ghost text-xl">מועדפים</p>
+                <p className="btn btn-ghost text-xl">{t("favorites")}</p>
               </Link>
               <UserButton afterSignOutUrl="/" />
             </div>

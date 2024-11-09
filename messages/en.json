@@ -1,0 +1,14 @@
+{
+  "NavBar": {
+    "title": "AI diet",
+    "all-creations": "All creations",
+    "sign-in": "Sign in",
+    "recipes": "Recipes",
+    "favorites": "Favorites"
+  },
+  "Hero": {
+    "title": { "main": " The perfect recipe with", "try": "Try now!" },
+    "userText": "Onion, pasta, tomato sauce, cheese",
+    "botText": "Here is a Simple Recipe for Pasta with Tomato Sauce, Onion, and Cheese:<br />Ingredients:<br />250 grams pasta<br />1 large onion, chopped<br />2-3 tablespoons tomato sauce<br />100 grams grated Parmesan or Romano cheese<br />Salt and pepper to taste<br />1 cup water<br />1 cup olive oil<br />Instructions:<br />1. In a pot with water and salt, bring to a boil and add the pasta. At this point, follow the instructions on the package.<br />2. In another pot, rinse and chop the onion into small cubes.<br />3. In another pot, add the olive oil and sauté the onion until it becomes translucent and soft.<br />4. Add the tomato sauce and stir well. If the sauce looks dry, add a bit of water.<br />5. When the pasta is ready, drain it and add to the pot with the sauce. Stir well so the pasta folds into the sauce.<br />6. Let the pasta absorb the flavors on low heat for about 5 minutes, stirring occasionally.<br />7. Cut the cheese into small pieces and add to the pot.<br />8. Add salt and pepper to taste.<br />9. Serve hot and top with grated Parmesan.<br />Enjoy!"
+  }
+}
