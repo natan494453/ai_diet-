@@ -1,34 +1,34 @@
 import React from "react";
 import Card from "@/components/Card/Card";
+import { useTranslations } from "next-intl";
 export default function Explain() {
+  const t = useTranslations("howToStart");
   return (
     <div className=" mt-[5%] ">
       <div>
         <h2 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text font-bold mt-20 max-lg:text-2xl text-9xl text-center">
-          איך מתחילים
+          {t("title")}
         </h2>
       </div>
       <div className="flex justify-around max-lg:flex-col items-center flex-wrap">
         <Card
-          title={"הרשמה"}
-          explain={"ניתן להירשם בקלות עיל ידי לחיצה על התחבר או נסה עכשיו"}
+          title={t("cardOne.title")}
+          explain={t("cardOne.explain")}
           img="/steps/register.png"
         />
         <Card
-          title={"יצירת מתכון"}
-          explain={"יש לירשום שם של מאכל או מצרכים שיש  יש לכם בבית"}
+          title={t("cardTwo.title")}
+          explain={t("cardTwo.explain")}
           img="/steps/ask.png"
         />{" "}
         <Card
-          title={"חישוב המתכון"}
-          explain={
-            "תוך כמה שניות אחריי לחיצת ה שלח AI יחשב את המכון המושלם בישבליכם"
-          }
+          title={t("cardThree.title")}
+          explain={t("cardThree.explain")}
           img="/steps/thing.png"
         />{" "}
         <Card
-          title={"הכנה"}
-          explain={"כאת מה שנישאר לעשות זה רק להכין את המתכון!"}
+          title={t("cardFour.title")}
+          explain={t("cardFour.explain")}
           img="/steps/food.png"
         />
       </div>
