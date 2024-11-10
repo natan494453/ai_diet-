@@ -62,5 +62,9 @@
     "send": "Send",
     "stop": "Stop",
     "question": "Write a question about food or ingredients..."
+  },
+  "accordion": {
+    "title": "Your Recipes",
+    "search": "Search Recipes"
   }
 }

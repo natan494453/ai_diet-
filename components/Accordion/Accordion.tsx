@@ -8,12 +8,14 @@ import { editFav } from "@/actions/iditFav";
 import { deleteRecipeHandler } from "@/actions/delRecipe";
 import { Id } from "@/convex/_generated/dataModel";
 import { recipeTypes } from "@/actions/addRecipe";
+import { useTranslations } from "next-intl";
 interface recipeTypeEach extends recipeTypes {
   userId: string;
   _creationTime: number;
   _id: Id<"recipes">;
 }
 export default function Accordion() {
+  const t = useTranslations("accordion");
   const deleteItem = async (id: Id<"recipes">) => {
     try {
       if (user && user.primaryEmailAddressId && data) {
@@ -54,7 +56,7 @@ export default function Accordion() {
 
     return (
       <div className="flex  relative flex-col  gap-10">
-        <h2 className="text-center text-4xl font-bold mt-5">המתכונים שלך</h2>
+        <h2 className="text-center text-4xl font-bold mt-5"> {t("title")}</h2>
 
         <div className="flex gap-6 flex-wrap justify-center max-lg:flex-col  py-10 min-h-screen">
           {filterRecipes?.map((item: recipeTypeEach, index: number) => (
@@ -147,7 +149,7 @@ export default function Accordion() {
         <div className="flex items-center gap-3">
           <input
             type="text"
-            placeholder="חפש מתכון"
+            placeholder={t("search")}
             className="input input-bordered w-full max-w-xs"
             id="search"
             name="search"
