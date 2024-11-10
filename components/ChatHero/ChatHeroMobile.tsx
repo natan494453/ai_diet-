@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useTypeWriter } from "@/hooks/useTypeWriter";
 import { useTranslations } from "next-intl";
-export default function ChatHeroMobile() {
+export default function ChatHeroMobile({ locale }: { locale: string }) {
   const t = useTranslations("Hero");
   const userText = t("userText");
   const lastText = t("botText");
@@ -59,6 +59,7 @@ export default function ChatHeroMobile() {
           </div>
           <div
             className="chat-bubble h-[1100px] w-[290.89px]"
+            dir={locale === "he" ? "rtl" : "ltr"}
             dangerouslySetInnerHTML={{ __html: typedAiText }}
           ></div>
           <div>
@@ -67,7 +68,13 @@ export default function ChatHeroMobile() {
               className={` absolute bottom-1 right-20 text-sm btn btn-xs  ${typedAiText.length < 300 && "hidden"}`}
             >
               {" "}
-              {isReadMoreClick ? "Read less" : "Read More"}
+              {isReadMoreClick
+                ? locale === "he"
+                  ? "סגור"
+                  : "Read less"
+                : locale === "he"
+                  ? "קרא עוד"
+                  : "Read More"}
             </button>
           </div>
         </div>
