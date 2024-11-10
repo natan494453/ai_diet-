@@ -48,5 +48,19 @@
       "title": "Easy and Quick to Use",
       "description": "With just a few simple clicks, you can get upgraded and diverse recipes that perfectly match what you're looking for. Our system works quickly to generate refreshing meal ideas anytime, so you always have new, amazing-tasting inspiration."
     }
+  },
+  "stats": {
+    "created": "Recipes Created",
+    "favorites": "Favorites",
+    "questionAsked": "Questions Asked"
+  },
+  "chat": {
+    "timeToCook": "Preparation Time",
+    "serving": "Servings",
+    "items": "Ingredients",
+    "howTo": "Instructions",
+    "send": "Send",
+    "stop": "Stop",
+    "question": "Write a question about food or ingredients..."
   }
 }

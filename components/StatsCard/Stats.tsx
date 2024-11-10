@@ -2,10 +2,11 @@
 
 import { useQuery, Authenticated } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import Clerk, { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
-
+import { useTranslations } from "next-intl";
 export default function Stats() {
+  const t = useTranslations("stats");
   const { user, isLoaded } = useUser();
   const [userImg, setUserImg] = useState<string | undefined>(undefined);
 
@@ -45,7 +46,7 @@ export default function Stats() {
           <Authenticated>
             <RecipeCount />
           </Authenticated>
-          <div className="stat-title text-secondary">מתכונים שנוצרו </div>
+          <div className="stat-title text-secondary"> {t("created")} </div>
         </div>
       </div>
       <div className="stat max-lg:hidden flex justify-around items-center">
@@ -56,7 +57,7 @@ export default function Stats() {
               <FavCount />
             </Authenticated>
           </div>
-          <div className="stat-title">מתכונים מעודפים</div>
+          <div className="stat-title">{t("favorites")}</div>
         </div>
         <div className="stat-figure text-primary ">
           <svg
@@ -81,7 +82,7 @@ export default function Stats() {
             <GetCount />
           </Authenticated>
 
-          <div className="stat-title text-secondary">שאלות שנישאלו</div>
+          <div className="stat-title text-secondary"> {t("questionAsked")}</div>
         </div>
         <div className="stat-figure text-secondary">
           <svg

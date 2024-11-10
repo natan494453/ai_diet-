@@ -10,15 +10,16 @@ export const metadata: Metadata = {
   description: "מתכונים",
 };
 
-export default async function Page() {
+export default async function Page({ params }: { params: { locale: string } }) {
   const { getToken } = await auth();
   const token = (await getToken({ template: "convex" })) ?? undefined;
+  const { locale } = await params;
 
   return (
     <div className=" ">
       <Stats />
       <div className="border-b-2 border-[#f1f1f15b]">
-        <Chat token={token} />
+        <Chat token={token} locale={locale} />
       </div>
       <div className="border-b-2 border-[#f1f1f15b]">
         <Accordion />

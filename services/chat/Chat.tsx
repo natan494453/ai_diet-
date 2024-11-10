@@ -1,14 +1,19 @@
 "use client";
-import { useCompletion } from "ai/react";
-import React, { ChangeEvent } from "react";
-import DOMPurify from "isomorphic-dompurify";
+import React, { ChangeEvent, useTransition } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import { experimental_useObject as useObject } from "ai/react";
-import { recipeSchema } from "@/constants/text";
+import { recipeSchemaEnglish, recipeSchemaHebrew } from "@/constants/text";
 import { addRecipeHandler, recipeTypes } from "@/actions/addRecipe";
-
-export default function Chat({ token }: { token: string | undefined }) {
+import { useTranslations } from "next-intl";
+export default function Chat({
+  token,
+  locale,
+}: {
+  token: string | undefined;
+  locale: string;
+}) {
+  const t = useTranslations("chat");
   const { user, isLoaded } = useUser();
   const [userMail, setUserImg] = useState<string | undefined>(undefined);
   useEffect(() => {
@@ -31,7 +36,7 @@ export default function Chat({ token }: { token: string | undefined }) {
   };
   const { isLoading, stop, object, submit } = useObject({
     api: "/api/completion",
-    schema: recipeSchema,
+    schema: locale === "he" ? recipeSchemaHebrew : recipeSchemaEnglish,
     onFinish(event) {
       addRecipeHandler(event.object as recipeTypes, token);
       setIsok(true);
@@ -71,6 +76,7 @@ export default function Chat({ token }: { token: string | undefined }) {
               token: token,
               calories,
               recipe,
+              locale,
             });
           }}
         >
@@ -78,14 +84,14 @@ export default function Chat({ token }: { token: string | undefined }) {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:justify-around items-center mb-6 md:mb-8 text-purple-400 font-extrabold text-3xl space-y-4 md:space-y-0 md:space-x-4">
               <div className="flex flex-col items-center">
-                <span className="text-sm text-gray-400">זמן הכנה</span>
+                <span className="text-sm text-gray-400">{t("timeToCook")}</span>
                 <span>{object?.cookTime || "N/A"}</span>
               </div>
               <div className="text-center md:flex-1 text-3xl md:text-4xl">
                 <span>{object?.title}</span>
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-sm text-gray-400">מנות</span>
+                <span className="text-sm text-gray-400">{t("serving")}</span>
                 <span>{object?.servings || "N/A"}</span>
               </div>
             </div>
@@ -93,7 +99,7 @@ export default function Chat({ token }: { token: string | undefined }) {
             {/* Ingredients */}
             <div className="space-y-4">
               <h3 className="text-xl md:text-2xl text-gray-300 font-semibold mb-4">
-                מרכיבים
+                {t("items")}
               </h3>
               {object?.ingredients?.map((item, index) => (
                 <div
@@ -109,7 +115,7 @@ export default function Chat({ token }: { token: string | undefined }) {
             {/* Instructions */}
             <div className="mt-8 md:mt-10 space-y-3 md:space-y-4 text-gray-200">
               <h3 className="text-xl md:text-2xl text-gray-300 font-semibold mb-4">
-                הוראות הכנה
+                {t("howTo")}
               </h3>
               {object?.instructions?.map((item, index) => (
                 <p
@@ -126,7 +132,7 @@ export default function Chat({ token }: { token: string | undefined }) {
             <input
               className="   border border-gray-300 rounded-xl  shadow-xl p-4"
               // value={isLoading ? "......." : input}
-              placeholder={isLoading ? "..." : " כתוב שאלה על אוכל או מצרכים"}
+              placeholder={isLoading ? "..." : t("question")}
               onChange={(e) => {
                 setRecipe(e.target.value);
               }}
@@ -158,7 +164,7 @@ export default function Chat({ token }: { token: string | undefined }) {
                   disabled={isLoading}
                   type="submit"
                 >
-                  שלח
+                  {t("send")}
                 </button>
               </div>
               <div>
@@ -167,7 +173,7 @@ export default function Chat({ token }: { token: string | undefined }) {
                   type="button"
                   onClick={stop}
                 >
-                  עצור
+                  {t("stop")}
                 </button>
               </div>
             </div>
