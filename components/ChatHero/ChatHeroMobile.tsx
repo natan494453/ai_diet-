@@ -7,7 +7,7 @@ export default function ChatHeroMobile() {
   const userText = t("userText");
   const lastText = t("botText");
   const [isReadMoreClick, setIsReadMoreClick] = useState(false);
-  const writeUserText = useTypeWriter(userText, 80);
+  const writeUserText = useTypeWriter(userText, 35);
 
   const [writeAiText, setWriteAiText] = useState("");
 
@@ -19,7 +19,7 @@ export default function ChatHeroMobile() {
     return () => clearTimeout(timeout);
   }, [lastText]);
 
-  const typedAiText = useTypeWriter(writeAiText, 60);
+  const typedAiText = useTypeWriter(writeAiText, 20);
   const openFullTexthandler = () => {
     setIsReadMoreClick((prev) => !prev);
   };
