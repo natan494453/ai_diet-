@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useTransition } from "react";
 import Image from "next/image";
 import WhoAreWeCard from "@/components/WhoAreWeCard/WhoAreWeCard";
-import { useTranslations } from "next-intl";
 import { aboutUsText } from "@/constants/text";
+import { useTranslations } from "next-intl";
 export default function WhoAreWe() {
   const t = useTranslations("WhoAreWe");
+  const s = useTranslations("aboutUsText");
+
   return (
     <div className=" bg-base-300 mt-10 relative pb-10">
       <div className=" relative">
@@ -49,8 +51,8 @@ export default function WhoAreWe() {
                 iSRev={index % 2 === 0 ? true : false}
                 src={item.img}
                 alt={item.alt}
-                title={item.title}
-                description={item.description}
+                title={s(`card${index}.title`)}
+                description={s(`card${index}.description`)}
               />
             );
           })}

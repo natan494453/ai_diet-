@@ -34,5 +34,19 @@
     "title": "More than 40,000 recipes have been created.",
     "subTitle": "Recipe creator with the help of artificial intelligence.",
     "description": "Get upgraded recipes powered by artificial intelligence! Our website uses machine learning to create unique and delicious recipes tailored exactly to your taste and needs. Visit now to discover the new flavors the system can offer!"
+  },
+  "aboutUsText": {
+    "card0": {
+      "title": "Personalized Recipes",
+      "description": "Fill in your culinary preferences, from the types of dishes you enjoy to any allergies or dietary restrictions, and our system will create unique, personalized recipes for every meal. Discover the possibility of perfectly tailored food without the effort!"
+    },
+    "card1": {
+      "title": "A Wide Variety of Flavors",
+      "description": "Discover a world of flavors with recipes you never thought to combine! The system uses the power of artificial intelligence to explore new and surprising ingredient combinations, so you can enjoy unforgettable culinary experiences every time you step into the kitchen."
+    },
+    "card2": {
+      "title": "Easy and Quick to Use",
+      "description": "With just a few simple clicks, you can get upgraded and diverse recipes that perfectly match what you're looking for. Our system works quickly to generate refreshing meal ideas anytime, so you always have new, amazing-tasting inspiration."
+    }
   }
 }
