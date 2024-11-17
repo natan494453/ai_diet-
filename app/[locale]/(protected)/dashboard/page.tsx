@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { locale: string } }) {
         <Chat token={token} locale={locale} />
       </div>
       <div className="border-b-2 border-[#f1f1f15b]">
-        <Accordion />
+        <Accordion locale={locale} />
       </div>
     </div>
   );

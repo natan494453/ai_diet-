@@ -65,6 +65,11 @@
   },
   "accordion": {
     "title": "Your Recipes",
-    "search": "Search Recipes"
+    "search": "Search Recipes",
+    "ingredients": "Ingredients",
+    "Instructions": "Instructions:",
+    "delete": "Delete",
+    "add_to_favorite": "Add to favorite",
+    "remove_from_favorite": "Remove from favorite"
   }
 }

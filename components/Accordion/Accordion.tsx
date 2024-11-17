@@ -14,7 +14,7 @@ interface recipeTypeEach extends recipeTypes {
   _creationTime: number;
   _id: Id<"recipes">;
 }
-export default function Accordion() {
+export default function Accordion({ locale }: { locale: string }) {
   const t = useTranslations("accordion");
   const deleteItem = async (id: Id<"recipes">) => {
     try {
@@ -73,11 +73,13 @@ export default function Accordion() {
               </div>
 
               {/* Recipe Content */}
-              <div className="p-8 space-y-6">
+              <div
+                className={`p-8 space-y-6 ${locale === "he" ? "text-right" : "text-left"}`}
+              >
                 {/* Ingredients */}
                 <div>
                   <h3 className="text-gray-200 font-semibold text-lg mb-3">
-                    מצרכים:
+                    {t("ingredients")}
                   </h3>
                   <ul className="space-y-2 text-gray-300 leading-relaxed">
                     {item.ingredients.map((ingredient, idx) => (
@@ -97,9 +99,9 @@ export default function Accordion() {
                 {/* Instructions */}
                 <div>
                   <h3 className="text-gray-200 font-semibold text-lg mb-3">
-                    הוראות הכנה:
+                    {t("Instructions")}
                   </h3>
-                  <ol className="list-decimal list-inside space-y-3 text-gray-300 pl-4 leading-relaxed">
+                  <ol className="list-decimal list-inside space-y-3 text-gray-300 pl-4 leading-relaxed ">
                     {item.instructions.map((instruction, idx) => (
                       <li key={idx} className="text-base">
                         {instruction}
@@ -115,7 +117,7 @@ export default function Accordion() {
                   onClick={() => openModal(item.title, item._id)}
                   className="bg-red-600 text-white py-3 px-6 rounded-md shadow-md hover:bg-red-700 transition font-semibold"
                 >
-                  מחק
+                  {t("delete")}
                 </button>
 
                 <button
@@ -127,7 +129,9 @@ export default function Accordion() {
                       : "bg-green-600 text-white hover:bg-green-700"
                   }`}
                 >
-                  {item.isFavorite ? "הסר ממעודפים" : "הוסף למעודפים"}
+                  {item.isFavorite
+                    ? t("remove_from_favorite")
+                    : t("add_to_favorite")}
                 </button>
               </div>
             </div>

@@ -65,6 +65,11 @@
   },
   "accordion": {
     "title": "המתכונים שלך",
-    "search": "חפש מתכון"
+    "search": "חפש מתכון",
+    "ingredients": "מצרכים",
+    "Instructions": ":הוראות הכנה",
+    "delete": "מחק",
+    "add_to_favorite": "הוסך למעודפים",
+    "remove_from_favorite": "הסר ממעודפים"
   }
 }
