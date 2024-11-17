@@ -1,28 +1,116 @@
-import React from "react";
-import { fetchMutation, fetchQuery } from "convex/nextjs";
-import { Id } from "@/convex/_generated/dataModel";
+"use client";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
-export default async function page(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const { id } = params;
 
-  const recepit = await fetchQuery(api.tasks.getCurrentRecipe, {
-    recipeId: id,
-  });
+export default function RecipePage() {
+  const [recipe, setRecipe] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const id = searchParams.getAll("id")[0];
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      if (!id) {
+        setError("Invalid recipe ID.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const recepit = await fetchQuery(api.tasks.getCurrentRecipe, {
+          recipeId: id,
+        });
+
+        if (!recepit || recepit.length === 0) {
+          setError("Recipe not found.");
+        } else {
+          setRecipe(recepit);
+        }
+      } catch (err) {
+        setError("Failed to fetch recipe.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipe();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black">
+        <p className="text-white text-lg animate-pulse tracking-widest">
+          Loading Recipe...
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black">
+        <p className="text-red-400 text-lg font-semibold">{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex justify-center items-center  ">
-      {recepit.map((item) => {
-        return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-5">
+      <h2 className="text-center text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 mb-10">
+        Recipe Details
+      </h2>
+
+      <div className="flex flex-wrap justify-center gap-8">
+        {recipe.map((item) => (
           <div
             key={item._id}
-            className=" bg-base-200 lg:w-[60vw] p-10 rounded-xl shadow-2xl "
+            className="glass-effect rounded-xl shadow-lg p-6 lg:w-[40vw] w-full hover:scale-105 transition-transform duration-300"
           >
-            <div className="font-bold text-2xl">{item.title}</div>
-            <div dangerouslySetInnerHTML={{ __html: item.recipe }}></div>
+            {/* Recipe Header */}
+            <div className="flex justify-between items-center mb-5">
+              <h1 className="text-3xl font-bold text-white">{item.title}</h1>
+              <p className="text-sm text-gray-400">
+                {item.cookTime} • {item.servings} servings
+              </p>
+            </div>
+
+            {/* Recipe Content */}
+            <div>
+              {/* Ingredients */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-pink-300 mb-3">
+                  Ingredients
+                </h3>
+                <ul className="space-y-2 text-gray-200">
+                  {item.ingredients.map((ingredient, idx) => (
+                    <li key={idx} className="flex justify-between items-center">
+                      <span>{ingredient.name}</span>
+                      <span className="text-sm text-gray-400">
+                        {ingredient.quantity}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Instructions */}
+              <div>
+                <h3 className="text-lg font-semibold text-pink-300 mb-3">
+                  Instructions
+                </h3>
+                <ol className="list-decimal pl-5 space-y-3 text-gray-200">
+                  {item.instructions.map((instruction, idx) => (
+                    <li key={idx}>{instruction}</li>
+                  ))}
+                </ol>
+              </div>
+            </div>
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 }
