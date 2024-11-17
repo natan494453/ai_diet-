@@ -1,4 +1,3 @@
-import React, { useTransition } from "react";
 import Image from "next/image";
 import WhoAreWeCard from "@/components/WhoAreWeCard/WhoAreWeCard";
 import { aboutUsText } from "@/constants/text";

@@ -9,6 +9,7 @@ export default clerkMiddleware(async (auth, req) => {
   // Restrict admin route to users with specific role
   // Restrict dashboard routes to signed in users
   if (isDashboardRoute(req) || isFavoriteRoute(req)) await auth.protect();
+
   return intlMiddleware(req);
 });
 

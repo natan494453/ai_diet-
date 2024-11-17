@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ConvexReactClient } from "convex/react";
 import { ClerkProvider, useAuth } from "@clerk/clerk-react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { heIL, enUS } from "@clerk/localizations";
@@ -14,6 +14,7 @@ export default function ConvexClientProvider({
   children: ReactNode;
   leng: string;
 }) {
+  console.log(leng);
   return (
     <ClerkProvider
       localization={leng === "en" ? enUS : heIL}

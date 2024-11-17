@@ -3,7 +3,7 @@
 import { useQuery, Authenticated } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { editFav } from "@/actions/iditFav";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, MouseEvent, useEffect } from "react";
 import { recipeTypes } from "@/actions/addRecipe";
 
 interface Props {
@@ -11,64 +11,85 @@ interface Props {
 }
 
 export default function Fav({ user }: Props) {
-  const [serachQ, setserachQ] = useState<string>("");
+  const [searchQ, setSearchQ] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
-  const [mTrack, setMtrack] = useState(false);
-  const [x, setX] = useState<number>();
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState<number>(0);
+  const [scrollLeft, setScrollLeft] = useState<number>(0);
 
-  const addToFavHanlder = async (id: string) => {
-    editFav(id);
+  const addToFavHandler = async (id: string) => {
+    await editFav(id);
   };
+
+  const startDraggingHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault(); // Prevent unexpected behaviors on mouse down
+    setIsDragging(true);
+    setStartX(e.pageX - (ref.current?.offsetLeft ?? 0));
+    setScrollLeft(ref.current?.scrollLeft ?? 0);
+  };
+
+  const stopDraggingHandler = () => {
+    setIsDragging(false);
+  };
+
+  const draggingHandler = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !ref.current) return;
+    const x = e.pageX - (ref.current?.offsetLeft ?? 0);
+    const walk = (x - startX) * 1.5; // Adjust scrolling speed if necessary
+    ref.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Add event listeners to window for drag behavior
+  useEffect(() => {
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isDragging) {
+        requestAnimationFrame(() => draggingHandler(e as any));
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
 
   const FavRecipeElement = () => {
     const favRecipe = useQuery(api.tasks.getFavRecipe);
     const filteredFav = favRecipe?.filter((item) =>
-      item.title.includes(serachQ)
+      item.title.includes(searchQ)
     );
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (mTrack && ref.current) {
-        const movementX = e.movementX;
-        ref.current.scrollLeft -= movementX;
-      }
-    };
-
-    useEffect(() => {
-      const handleMouseUp = () => setMtrack(false);
-      document.addEventListener("mouseup", handleMouseUp);
-      document.addEventListener("mousemove", handleMouseMove);
-      return () => {
-        document.removeEventListener("mouseup", handleMouseUp);
-        document.removeEventListener("mousemove", handleMouseMove);
-      };
-    }, [mTrack]);
 
     return !favRecipe ? (
       <div>אין מועדפים</div>
     ) : (
-      <>
+      <div className="mb-10">
         <div className="flex justify-center mb-8">
           <input
             type="text"
             placeholder="חפש מתכון"
             className="input input-bordered w-full max-w-xs text-lg text-gray-800 placeholder-gray-500 bg-gray-100 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-            value={serachQ}
-            onChange={(e) => setserachQ(e.target.value)}
+            value={searchQ}
+            onChange={(e) => setSearchQ(e.target.value)}
           />
         </div>
 
         <div
+          className="flex lg:justify-around mb-10 gap-10 overflow-visible"
           ref={ref}
-          className="flex justify-around mb-10 gap-10 translate-x-[20%]"
-          onMouseDown={(e) => {
-            setX(e.clientX);
-            setMtrack(true);
-          }}
+          onMouseDown={startDraggingHandler}
+          style={{ cursor: isDragging ? "grabbing" : "grab" }}
         >
-          {filteredFav?.map((item: recipeTypes) => (
+          {filteredFav?.map((item: recipeTypes, index) => (
             <div
-              key={item.id || item.title}
-              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg transition-transform w-[50vw]"
+              key={index}
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg transition-transform lg:w-[50vw] max-lg:w-[100vw]"
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
@@ -112,7 +133,7 @@ export default function Fav({ user }: Props) {
             </div>
           ))}
         </div>
-      </>
+      </div>
     );
   };
 
