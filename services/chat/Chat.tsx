@@ -66,7 +66,7 @@ export default function Chat({
           <span className="text-2xl">מתכון לא נוסף</span>
         </div>
       </div>
-      <div className="    flex flex-col w-[80%]  ">
+      <div className="    flex flex-col lg:w-[80%]  ">
         <form
           onSubmit={async (e) => {
             e.preventDefault();
@@ -80,8 +80,9 @@ export default function Chat({
             });
           }}
         >
-          <div className="chat-bubble w-full max-w-3xl mx-auto p-6 md:p-10 bg-gray-900 shadow-2xl rounded-2xl border border-gray-700 transition-all duration-300 ease-in-out">
+          <div className="chat-bubble w-full max-w-3xl mx-auto p-6 md:p-10 bg-gray-900 shadow-2xl rounded-2xl border border-gray-700 transition-all duration-300 ease-in-out max-lg:w-screen">
             {/* Header */}
+
             <div className="flex flex-col md:flex-row md:justify-around items-center mb-6 md:mb-8 text-purple-400 font-extrabold text-3xl space-y-4 md:space-y-0 md:space-x-4">
               <div className="flex flex-col items-center">
                 <span className="text-sm text-gray-400">{t("timeToCook")}</span>
@@ -128,10 +129,16 @@ export default function Chat({
             </div>
           </div>
 
-          <div className=" flex  justify-center gap-7 mt-10 flex-col  w-[80vw]">
+          <div className=" flex  justify-center gap-7 mt-10 flex-col  lg:w-[80vw] ">
+            <div
+              className={`lds-facebook m-auto ${isLoading ? "block" : "hide"}`}
+            >
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
             <input
               className="   border border-gray-300 rounded-xl  shadow-xl p-4"
-              // value={isLoading ? "......." : input}
               placeholder={isLoading ? "..." : t("question")}
               onChange={(e) => {
                 setRecipe(e.target.value);
@@ -157,10 +164,10 @@ export default function Chat({
                 />
               </label>
             </div>
-            <div className="flex justify-center gap-10  ">
+            <div className="flex justify-center lg:gap-10 gap-10  ">
               <div>
                 <button
-                  className=" btn btn-accent px-16 text-xl "
+                  className=" btn btn-accent lg:px-16 text-xl "
                   disabled={isLoading}
                   type="submit"
                 >
@@ -169,7 +176,7 @@ export default function Chat({
               </div>
               <div>
                 <button
-                  className=" btn btn-warning px-16 text-xl"
+                  className=" btn btn-warning lg:px-16 text-xl"
                   type="button"
                   onClick={stop}
                 >
