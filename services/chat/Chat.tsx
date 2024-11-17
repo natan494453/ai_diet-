@@ -47,7 +47,10 @@ export default function Chat({
   });
 
   return (
-    <div className=" border-b-2 border-[#f1f1f15b] flex justify-center pb-4 mt-10 ">
+    <div
+      className={` border-b-2 border-[#f1f1f15b] flex justify-center pb-4 mt-10 `}
+      dir={locale === "he" ? "rtl" : "ltr"}
+    >
       <div
         className={`toast toast-top top-[20%] toast-center z-40 duration-200  ${
           isOK ? " opacity-1" : " opacity-0"
