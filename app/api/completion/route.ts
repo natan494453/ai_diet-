@@ -1,4 +1,3 @@
-import { recipeSchemaEnglish } from "@/constants/text";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { streamObject } from "ai";
 

@@ -76,33 +76,58 @@ export default function RecipePage() {
               </p>
             </div>
 
-            <div>
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-pink-300 mb-3">
-                  Ingredients
-                </h3>
-                <ul className="space-y-2 text-gray-200">
-                  {item.ingredients.map((ingredient, idx) => (
-                    <li key={idx} className="flex justify-between items-center">
-                      <span>{ingredient.name}</span>
-                      <span className="text-sm text-gray-400">
-                        {ingredient.quantity}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {/* Ingredients Section */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-pink-300 mb-3">
+                Ingredients
+              </h3>
+              <ul className="space-y-2 text-gray-200">
+                {item.ingredients.map((ingredient, idx) => (
+                  <li key={idx} className="flex justify-between items-center">
+                    <span>{ingredient.name}</span>
+                    <span className="text-sm text-gray-400">
+                      {ingredient.quantity}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-pink-300 mb-3">
-                  Instructions
-                </h3>
-                <ol className="list-decimal pl-5 space-y-3 text-gray-200">
-                  {item.instructions.map((instruction, idx) => (
-                    <li key={idx}>{instruction}</li>
-                  ))}
-                </ol>
-              </div>
+            {/* Instructions Section */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-pink-300 mb-3">
+                Instructions
+              </h3>
+              <ol className="list-decimal pl-5 space-y-3 text-gray-200">
+                {item.instructions.map((instruction, idx) => (
+                  <li key={idx}>{instruction}</li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Nutritional Information Section */}
+            <div className="mb-6 bg-gray-800 p-4 rounded-md shadow-md">
+              <h3 className="text-lg font-semibold text-pink-300 mb-3">
+                Nutritional Information
+              </h3>
+              <ul className="text-gray-200 space-y-2">
+                <li>
+                  <span className="font-medium">Calories: </span>
+                  {item.calories}
+                </li>
+                <li>
+                  <span className="font-medium">Carbs: </span>
+                  {item.carbs} g
+                </li>
+                <li>
+                  <span className="font-medium">Protein: </span>
+                  {item.protein} g
+                </li>
+                <li>
+                  <span className="font-medium">Fats: </span>
+                  {item.fats} g
+                </li>
+              </ul>
             </div>
           </div>
         ))}
