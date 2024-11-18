@@ -99,15 +99,40 @@ export default function Accordion({ locale }: { locale: string }) {
                 {/* Instructions */}
                 <div>
                   <h3 className="text-gray-200 font-semibold text-lg mb-3">
-                    {t("Instructions")}
+                    {t("instructions")}
                   </h3>
-                  <ol className="list-decimal list-inside space-y-3 text-gray-300 pl-4 leading-relaxed ">
+                  <ol className="list-decimal list-inside space-y-3 text-gray-300 pl-4 leading-relaxed">
                     {item.instructions.map((instruction, idx) => (
                       <li key={idx} className="text-base">
                         {instruction}
                       </li>
                     ))}
                   </ol>
+                </div>
+
+                {/* Nutritional Information */}
+                <div className="bg-gray-700 p-4 rounded-md shadow-md">
+                  <h3 className="text-gray-200 font-semibold text-lg mb-3">
+                    {t("nutrition_info")}
+                  </h3>
+                  <ul className="text-gray-300 space-y-2 leading-relaxed">
+                    <li>
+                      <span className="font-medium">{t("calories")}: </span>
+                      {item.calories}
+                    </li>
+                    <li>
+                      <span className="font-medium">{t("carbs")}: </span>
+                      {item.carbs} {t("m")}
+                    </li>
+                    <li>
+                      <span className="font-medium">{t("protein")}: </span>
+                      {item.protein} {t("m")}
+                    </li>
+                    <li>
+                      <span className="font-medium">{t("fats")}: </span>
+                      {item.fats} {t("m")}
+                    </li>
+                  </ul>
                 </div>
               </div>
 

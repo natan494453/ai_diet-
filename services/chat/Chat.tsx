@@ -60,12 +60,51 @@ export default function Chat({
     protein: z.number().describe("סך הכל מספר החלבונים במנה"),
     fats: z.number().describe("סך הכל מספר השומנים במנה"),
   });
+  const recipe_schema_english_with_calories = z.object({
+    title: z.string().describe("The recipe name"),
+    ingredients: z
+      .array(
+        z.object({
+          name: z.string().describe("The name of the ingredient"),
+          quantity: z
+            .string()
+            .describe(
+              "The quantity of the ingredient, e.g., '1 cup' or '2 tablespoons'"
+            ),
+        })
+      )
+      .describe(
+        `A list of ingredients with quantities such that the total calorie count is **exactly** ${
+          calories ? calories : "the number of calories per serving"
+        } calories 🍽️`
+      ),
+    instructions: z
+      .array(z.string())
+      .describe(
+        "📝 Preparation steps: step-by-step instructions that are clear and easy to follow"
+      ),
+    prepTime: z.string().describe("Preparation time, e.g., '15 minutes'"),
+    cookTime: z.string().describe("Cooking time, e.g., '30 minutes'"),
+    servings: z.number().describe("The number of servings the recipe yields"),
+    calories: z
+      .number()
+      .describe(
+        `The total number of calories **must be exactly equal to ${calories ? calories : "total calories"} calories**`
+      ),
+    carbs: z
+      .number()
+      .describe("The total amount of carbohydrates in the dish (grams)"),
+    protein: z
+      .number()
+      .describe("The total amount of protein in the dish (grams)"),
+    fats: z.number().describe("The total amount of fats in the dish (grams)"),
+  });
   const { isLoading, stop, object, submit } = useObject({
     api: "/api/completion",
     schema:
       locale === "he"
         ? recipe_schema_hebrew_with_calories
-        : recipeSchemaEnglish,
+        : recipe_schema_english_with_calories,
     onFinish(event) {
       addRecipeHandler(event.object as recipeTypes, token);
       console.log("finsih");
@@ -211,13 +250,16 @@ export default function Chat({
                 value={calories as number}
                 min={1}
                 className="   border border-gray-300 rounded-xl  shadow-xl p-4"
-                placeholder={isLoading ? "..." : "  מספר קלוריות רצוי "}
+                placeholder={isLoading ? "..." : t("number_of_calories")}
                 onChange={handleCaloreChange}
               />
             </div>
             <div className="form-control  lg:w-[20%]">
               <label className="label cursor-pointer">
-                <span className="label-text text-xl"> עם מספר קלוריות</span>
+                <span className="label-text text-xl">
+                  {" "}
+                  {t("with_calories")}{" "}
+                </span>
                 <input
                   onChange={handleCaloreClick}
                   type="checkbox"

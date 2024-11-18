@@ -61,15 +61,23 @@
     "howTo": "Instructions",
     "send": "Send",
     "stop": "Stop",
-    "question": "Write a question about food or ingredients..."
+    "question": "Write a question about food or ingredients...",
+    "with_calories": "With number of calories",
+    "number_of_calories": "num of calories wanted"
   },
   "accordion": {
     "title": "Your Recipes",
     "search": "Search Recipes",
     "ingredients": "Ingredients",
-    "Instructions": "Instructions:",
+    "instructions": "Instructions:",
     "delete": "Delete",
     "add_to_favorite": "Add to favorite",
-    "remove_from_favorite": "Remove from favorite"
+    "remove_from_favorite": "Remove from favorite",
+    "nutrition_info": "Nutrition info",
+    "calories": "Calories",
+    "carbs": "Carbs",
+    "protein": "Protein",
+    "fats": "Fats",
+    "m": "G"
   }
 }

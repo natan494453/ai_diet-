@@ -1,5 +1,3 @@
-import z from "zod";
-import { useTranslations } from "next-intl";
 export const aboutUsText = [
   {
     title: "מתכונים בהתאמה אישית",
@@ -24,28 +22,3 @@ export const aboutUsText = [
     alt: "plan icon",
   },
 ];
-
-//With out calories in english
-export const recipeSchemaEnglish = z.object({
-  title: z.string().describe("Recipe Name"),
-  ingredients: z
-    .array(
-      z.object({
-        name: z.string().describe("Ingredient Name"),
-        quantity: z
-          .string()
-          .describe("Ingredient quantity, e.g., '1 cup' or '2 tablespoons'"),
-      })
-    )
-    .describe("List of ingredients with quantities"),
-  instructions: z
-    .array(z.string())
-    .describe("Step-by-step preparation instructions"),
-  prepTime: z.string().describe("Preparation time, e.g., '15 minutes'"),
-  cookTime: z.string().describe("Cooking time, e.g., '30 minutes'"),
-  servings: z.number().describe("Number of servings"),
-});
-//End With out calories in english
-//////////////////////////////////
-
-////With calories in hebrew

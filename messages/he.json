@@ -61,7 +61,9 @@
     "howTo": "הוראות הכנה",
     "send": "שלח",
     "stop": "עצור",
-    "question": "כתוב שאלה על אוכל או מצרכים"
+    "question": "כתוב שאלה על אוכל או מצרכים",
+    "with_calories": "עם מספר קלוריות",
+    "number_of_calories": "מספר קלוריות רצוי"
   },
   "accordion": {
     "title": "המתכונים שלך",
@@ -70,6 +72,12 @@
     "Instructions": ":הוראות הכנה",
     "delete": "מחק",
     "add_to_favorite": "הוסך למעודפים",
-    "remove_from_favorite": "הסר ממעודפים"
+    "remove_from_favorite": "הסר ממעודפים",
+    "nutrition_info": "ערכים תזונתיים",
+    "calories": "קלריות",
+    "carbs": " פחממות",
+    "protein": "חלבונים",
+    "fats": "שומן",
+    "m": "גרם"
   }
 }
