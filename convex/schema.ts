@@ -18,6 +18,10 @@ export default defineSchema({
     tags: v.optional(v.array(v.string())), // Optional tags, e.g., ["vegan", "gluten-free"]
     userId: v.id("users"), // Reference to user
     isFavorite: v.boolean(), // Favorite flag
+    calories: v.optional(v.number()),
+    carbs: v.optional(v.number()),
+    protein: v.optional(v.number()),
+    fats: v.optional(v.number()),
   }).index("userId", ["userId"]),
   users: defineTable({
     name: v.string(),

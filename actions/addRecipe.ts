@@ -11,11 +11,16 @@ export interface recipeTypes {
   cookTime: string;
   servings: number;
   isFavorite: boolean;
+  calories?: number;
+  carbs?: number;
+  fats?: number;
+  protein?: number;
 }
 export const addRecipeHandler = async (
   recipe: recipeTypes,
   token: string | undefined
 ) => {
+  console.log(recipe);
   if (!token) return NextResponse.json({ msg: "No Token", status: 401 });
   await fetchMutation(
     api.tasks.createRecipe,
@@ -27,6 +32,10 @@ export const addRecipeHandler = async (
       isFavorite: false,
       prepTime: recipe.prepTime,
       servings: recipe.servings,
+      calories: recipe.calories,
+      carbs: recipe.carbs,
+      fats: recipe.fats,
+      protein: recipe.protein,
     },
     {
       token: token,

@@ -16,6 +16,10 @@ export const createRecipe = mutation({
         quantity: v.string(), // Quantity, e.g., "1 cup", "2 tbsp"
       })
     ),
+    calories: v.optional(v.number()),
+    carbs: v.optional(v.number()),
+    protein: v.optional(v.number()),
+    fats: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -40,6 +44,10 @@ export const createRecipe = mutation({
       servings: args.servings,
       title: args.title,
       userId: user._id,
+      calories: args.calories,
+      carbs: args.carbs,
+      protein: args.protein,
+      fats: args.fats,
     });
   },
 });

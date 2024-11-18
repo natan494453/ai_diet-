@@ -7,7 +7,7 @@ export default function WhoAreWe() {
   const s = useTranslations("aboutUsText");
 
   return (
-    <div className=" bg-base-300 mt-10 relative pb-10">
+    <div className=" bg-base-300 mt-10 relative pb-10 ">
       <div className=" relative">
         <h2 className=" text-center font-bold text-xl lg:text-2xl pt-10 text-warning">
           {t("title")}
@@ -24,7 +24,7 @@ export default function WhoAreWe() {
         </div>
       </div>
       <div>
-        <div className=" absolute top-0 left-[15%] max-lg:hidden">
+        <div className=" absolute top-0 left-[15vw] max-2xl:hidden">
           <Image
             src={"/WhoAreWe/forkBG.png"}
             width={100}
@@ -32,7 +32,7 @@ export default function WhoAreWe() {
             alt="fork"
           />
         </div>
-        <div className=" absolute top-0 right-[15%] max-lg:hidden">
+        <div className=" absolute top-0 right-[15%] max-2xl:hidden">
           <Image
             src={"/WhoAreWe/forkBG.png"}
             width={100}

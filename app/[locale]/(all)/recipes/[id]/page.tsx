@@ -69,7 +69,6 @@ export default function RecipePage() {
             key={item._id}
             className="glass-effect rounded-xl shadow-lg p-6 lg:w-[40vw] w-full hover:scale-105 transition-transform duration-300"
           >
-            {/* Recipe Header */}
             <div className="flex justify-between items-center mb-5">
               <h1 className="text-3xl font-bold text-white">{item.title}</h1>
               <p className="text-sm text-gray-400">
@@ -77,9 +76,7 @@ export default function RecipePage() {
               </p>
             </div>
 
-            {/* Recipe Content */}
             <div>
-              {/* Ingredients */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-pink-300 mb-3">
                   Ingredients
@@ -96,7 +93,6 @@ export default function RecipePage() {
                 </ul>
               </div>
 
-              {/* Instructions */}
               <div>
                 <h3 className="text-lg font-semibold text-pink-300 mb-3">
                   Instructions

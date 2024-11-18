@@ -3,9 +3,10 @@ import React, { ChangeEvent, useTransition } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import { experimental_useObject as useObject } from "ai/react";
-import { recipeSchemaEnglish, recipeSchemaHebrew } from "@/constants/text";
+import { recipeSchemaEnglish, recipe_schema_hebrew } from "@/constants/text";
 import { addRecipeHandler, recipeTypes } from "@/actions/addRecipe";
 import { useTranslations } from "next-intl";
+import { z } from "zod";
 export default function Chat({
   token,
   locale,
@@ -34,11 +35,40 @@ export default function Chat({
   const handleCaloreChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCalories(Number(e.target.value));
   };
+  const recipe_schema_hebrew_with_calories = z.object({
+    title: z.string().describe("שם המתכון"),
+    ingredients: z
+      .array(
+        z.object({
+          name: z.string().describe("שם המרכיב"),
+          quantity: z
+            .string()
+            .describe("כמות המרכיב, למשל '1 כוס' או '2 כפות'"),
+        })
+      )
+      .describe(
+        `רשימת מרכיבים עם כמויות כך שהסך הכולל של הקלוריות יעמוד בדיוק על ${calories}`
+      ),
+    instructions: z.array(z.string()).describe("הוראות הכנה שלב-אחר-שלב"),
+    prepTime: z.string().describe("זמן הכנה, למשל '15 דקות'"),
+    cookTime: z.string().describe("זמן בישול, למשל '30 דקות'"),
+    servings: z.number().describe("מספר מנות"),
+    calories: z
+      .number()
+      .describe("סך הכל מספר קלוריות חייב להיות בדיוק שווה ל-" + calories),
+    carbs: z.number().describe("סך הכל מספר הפחמימות במנה"),
+    protein: z.number().describe("סך הכל מספר החלבונים במנה"),
+    fats: z.number().describe("סך הכל מספר השומנים במנה"),
+  });
   const { isLoading, stop, object, submit } = useObject({
     api: "/api/completion",
-    schema: locale === "he" ? recipeSchemaHebrew : recipeSchemaEnglish,
+    schema:
+      locale === "he"
+        ? recipe_schema_hebrew_with_calories
+        : recipeSchemaEnglish,
     onFinish(event) {
       addRecipeHandler(event.object as recipeTypes, token);
+      console.log("finsih");
       setIsok(true);
       setTimeout(() => {
         setIsok(false);
@@ -85,7 +115,6 @@ export default function Chat({
         >
           <div className="chat-bubble w-full max-w-3xl mx-auto p-6 md:p-10 bg-gray-900 shadow-2xl rounded-2xl border border-gray-700 transition-all duration-300 ease-in-out max-lg:w-screen">
             {/* Header */}
-
             <div className="flex flex-col md:flex-row md:justify-around items-center mb-6 md:mb-8 text-purple-400 font-extrabold text-3xl space-y-4 md:space-y-0 md:space-x-4">
               <div className="flex flex-col items-center">
                 <span className="text-sm text-gray-400">{t("timeToCook")}</span>
@@ -99,7 +128,6 @@ export default function Chat({
                 <span>{object?.servings || "N/A"}</span>
               </div>
             </div>
-
             {/* Ingredients */}
             <div className="space-y-4">
               <h3 className="text-xl md:text-2xl text-gray-300 font-semibold mb-4">
@@ -115,7 +143,6 @@ export default function Chat({
                 </div>
               ))}
             </div>
-
             {/* Instructions */}
             <div className="mt-8 md:mt-10 space-y-3 md:space-y-4 text-gray-200">
               <h3 className="text-xl md:text-2xl text-gray-300 font-semibold mb-4">
@@ -129,6 +156,37 @@ export default function Chat({
                   {item}
                 </p>
               ))}
+            </div>{" "}
+            <div className="mt-8 md:mt-10 space-y-6 md:space-y-8 text-gray-200">
+              <h3 className="text-xl md:text-2xl text-gray-300 font-semibold mb-4">
+                ערכים תזונתיים
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
+                  <span className="text-sm text-gray-400">קלוריות</span>
+                  <span className="text-xl md:text-2xl font-bold">
+                    {object?.calories || "N/A"}
+                  </span>
+                </div>
+                <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
+                  <span className="text-sm text-gray-400">פחמימות</span>
+                  <span className="text-xl md:text-2xl font-bold">
+                    {object?.carbs || "N/A"}
+                  </span>
+                </div>
+                <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
+                  <span className="text-sm text-gray-400">שומנים</span>
+                  <span className="text-xl md:text-2xl font-bold">
+                    {object?.fats || "N/A"}
+                  </span>
+                </div>
+                <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
+                  <span className="text-sm text-gray-400">חלבונים</span>
+                  <span className="text-xl md:text-2xl font-bold">
+                    {object?.protein || "N/A"}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 

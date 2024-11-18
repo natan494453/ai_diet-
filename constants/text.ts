@@ -25,25 +25,7 @@ export const aboutUsText = [
   },
 ];
 
-export const recipeSchemaHebrew = z.object({
-  title: z.string().describe("שם המתכון"),
-  ingredients: z
-    .array(
-      z.object({
-        name: z.string().describe("שם המרכיב"),
-        quantity: z.string().describe("כמות המרכיב, למשל '1 כוס' או '2 כפות'"),
-      })
-    )
-    .describe("רשימת מרכיבים עם כמויות "),
-  instructions: z.array(z.string()).describe("הוראות הכנה שלב-אחר-שלב"),
-  prepTime: z.string().describe("זמן הכנה, למשל '15 דקות'"),
-  cookTime: z.string().describe("זמן בישול, למשל '30 דקות'"),
-  servings: z.number().describe("מספר מנות"),
-  // tags: z
-  //   .array(z.string())
-  //   .optional()
-  //   .describe("תגיות כמו 'טבעוני', 'ללא גלוטן', וכדומה"),
-});
+//With out calories in english
 export const recipeSchemaEnglish = z.object({
   title: z.string().describe("Recipe Name"),
   ingredients: z
@@ -62,8 +44,8 @@ export const recipeSchemaEnglish = z.object({
   prepTime: z.string().describe("Preparation time, e.g., '15 minutes'"),
   cookTime: z.string().describe("Cooking time, e.g., '30 minutes'"),
   servings: z.number().describe("Number of servings"),
-  // tags: z
-  //   .array(z.string())
-  //   .optional()
-  //   .describe("Tags like 'Vegan', 'Gluten-Free', etc."),
 });
+//End With out calories in english
+//////////////////////////////////
+
+////With calories in hebrew
