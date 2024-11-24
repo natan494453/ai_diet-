@@ -63,7 +63,14 @@
     "stop": "Stop",
     "question": "Write a question about food or ingredients...",
     "with_calories": "With number of calories",
-    "number_of_calories": "num of calories wanted"
+    "number_of_calories": "num of calories wanted",
+    "nutritional_facts": "Nutritional facts",
+    "calories": "Calories",
+    "carbs": "Carbs",
+    "fats": "Fats",
+    "protein": "Protein",
+    "add": "Recipe Added",
+    "not_added": "Error adding a recipe"
   },
   "accordion": {
     "title": "Your Recipes",

@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
 import ConvexClientProvider from "./ConvexClientProvider";
+import Res from "@/components/NavBar/Res";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,8 +35,10 @@ export default async function RootLayout({
           data-theme="dark"
           className="page"
         >
-          <body className={inter.className}>
-            <NavBar /> {children}
+          <body className={inter.className + "relative"}>
+            <NavBar />
+
+            {children}
           </body>
         </html>
       </ConvexClientProvider>

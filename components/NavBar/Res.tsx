@@ -1,66 +1,69 @@
 "use client";
 import React, { useState } from "react";
-
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+
 export default function Res() {
   const t = useTranslations("NavBar");
   const [isHam, setIsHam] = useState(false);
+
   return (
-    <div className=" lg:hidden z-[20]  ">
-      <div>
+    <div className="lg:hidden relative z-[500]">
+      {/* Header */}
+      <div className="flex items-center justify-between p-  text-white shadow-md">
         <button
-          onClick={() => {
-            setIsHam((prev) => !prev);
-          }}
-          className="btn btn-square btn-ghost "
+          onClick={() => setIsHam((prev) => !prev)}
+          className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+          aria-label="Toggle menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            className="inline-block w-5 h-5 stroke-current"
+            className="w-6 h-6"
           >
             <path
+              stroke="currentColor"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
               d="M4 6h16M4 12h16M4 18h16"
-            ></path>
+            />
           </svg>
-        </button>{" "}
-        <div className=" absolute top-1/2 translate-y-[-50%] right-[16%]">
+        </button>
+        <div className="ml-5">
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>
 
+      {/* Dropdown Menu */}
       <div
-        className={`   absolute  bg-base-300  left-0 top-16  duration-1000    ${
-          isHam ? "h-[150px] opacity-100 z-[50] " : "h-[60px] opacity-0 z-[-5]"
-        }  `}
+        className={`absolute top-[138%] left-[-40px]  bg-gray-800 text-white rounded-b-md shadow-lg overflow-hidden transform transition-transform duration-300 ${
+          isHam
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-4 opacity-0 pointer-events-none"
+        }`}
       >
-        <div className="">
-          <SignedIn>
-            <div className=" text-xl flex flex-col gap-5  ">
-              <Link href={"/dashboard"}>
-                <div className=" w-screen bg-base-200  pr-10 pl-5">
-                  <p>{t("recipes")}</p>
-                </div>
-              </Link>
-              <Link href={"/favorite"}>
-                <div className="w-screen bg-base-200  pr-10 pl-5">
-                  <p>{t("favorites")}</p>
-                </div>
-              </Link>
-              <Link href={"/recipes"}>
-                <div className="w-screen bg-base-200  pr-10 pl-5">
-                  <p>{t("all-creations")}</p>
-                </div>
-              </Link>
-            </div>
-          </SignedIn>
-        </div>
+        <SignedIn>
+          <nav className="flex flex-col divide-y divide-gray-700 z-[500] relative">
+            <Link href="/dashboard">
+              <div className="p-4 hover:bg-gray-700 transition duration-200 cursor-pointer">
+                {t("recipes")}
+              </div>
+            </Link>
+            <Link href="/favorite">
+              <div className="p-4 hover:bg-gray-700 transition duration-200 cursor-pointer">
+                {t("favorites")}
+              </div>
+            </Link>
+            <Link href="/recipes">
+              <div className="p-4 hover:bg-gray-700 transition duration-200 cursor-pointer">
+                {t("all-creations")}
+              </div>
+            </Link>
+          </nav>
+        </SignedIn>
       </div>
     </div>
   );

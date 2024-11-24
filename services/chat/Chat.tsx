@@ -3,7 +3,6 @@ import React, { ChangeEvent, useTransition } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 import { experimental_useObject as useObject } from "ai/react";
-import { recipeSchemaEnglish, recipe_schema_hebrew } from "@/constants/text";
 import { addRecipeHandler, recipeTypes } from "@/actions/addRecipe";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
@@ -121,21 +120,21 @@ export default function Chat({
       dir={locale === "he" ? "rtl" : "ltr"}
     >
       <div
-        className={`toast toast-top top-[20%] toast-center z-40 duration-200  ${
-          isOK ? " opacity-1" : " opacity-0"
+        className={` toast-top top-[20%] toast-center z-40 duration-200  ${
+          isOK ? " toast" : " hidden"
         }`}
       >
         <div className="alert alert-success ">
-          <span className="text-2xl ">מתכון נוסף</span>
+          <span className="text-2xl ">{t("add")}</span>
         </div>
       </div>{" "}
       <div
         className={`toast toast-top top-[20%] toast-center z-40 duration-200 ${
-          isNotOK ? " opacity-1" : " opacity-0"
+          isNotOK ? " toast" : " hidden"
         }`}
       >
         <div className="alert alert-error">
-          <span className="text-2xl">מתכון לא נוסף</span>
+          <span className="text-2xl">{t("not_added")}</span>
         </div>
       </div>
       <div className="    flex flex-col lg:w-[80%]  ">
@@ -198,29 +197,29 @@ export default function Chat({
             </div>{" "}
             <div className="mt-8 md:mt-10 space-y-6 md:space-y-8 text-gray-200">
               <h3 className="text-xl md:text-2xl text-gray-300 font-semibold mb-4">
-                ערכים תזונתיים
+                {t("nutritional_facts")}
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
-                  <span className="text-sm text-gray-400">קלוריות</span>
+                  <span className="text-sm text-gray-400">{t("calories")}</span>
                   <span className="text-xl md:text-2xl font-bold">
                     {object?.calories || "N/A"}
                   </span>
                 </div>
                 <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
-                  <span className="text-sm text-gray-400">פחמימות</span>
+                  <span className="text-sm text-gray-400">{t("carbs")}</span>
                   <span className="text-xl md:text-2xl font-bold">
                     {object?.carbs || "N/A"}
                   </span>
                 </div>
                 <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
-                  <span className="text-sm text-gray-400">שומנים</span>
+                  <span className="text-sm text-gray-400">{t("fats")}</span>
                   <span className="text-xl md:text-2xl font-bold">
                     {object?.fats || "N/A"}
                   </span>
                 </div>
                 <div className="flex flex-col items-center bg-gray-800 p-4 md:p-6 rounded-lg shadow-md hover:bg-purple-500 hover:bg-opacity-20 transition-colors duration-200 ease-in-out">
-                  <span className="text-sm text-gray-400">חלבונים</span>
+                  <span className="text-sm text-gray-400">{t("protein")}</span>
                   <span className="text-xl md:text-2xl font-bold">
                     {object?.protein || "N/A"}
                   </span>

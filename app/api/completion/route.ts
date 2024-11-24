@@ -8,6 +8,7 @@ import { z } from "zod";
 
 export async function POST(req: Request) {
   const body = await req.json();
+
   console.log(body.calories);
   const google = createGoogleGenerativeAI({
     apiKey: process.env.GOOGLE_API_KEY,
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
           quantity: z
             .string()
             .describe(
-              "The quantity of the ingredient, e.g., '1 cup' or '2 tablespoons'"
+              `${body.calories ? `The quantity of the ingredient, that will produce ${body.calories} calories e.g., '1 cup' or '2 tablespoons` : "The quantity of the ingredient, e.g., '1 cup' or '2 tablespoons'"}`
             ),
         })
       )
@@ -74,11 +75,19 @@ export async function POST(req: Request) {
       ),
     carbs: z
       .number()
-      .describe("The total amount of carbohydrates in the dish (grams)"),
+      .describe(
+        "The total amount of carbohydrates in the dish (grams) based on the size"
+      ),
     protein: z
       .number()
-      .describe("The total amount of protein in the dish (grams)"),
-    fats: z.number().describe("The total amount of fats in the dish (grams)"),
+      .describe(
+        "The total amount of protein in the dish (grams) based on the size"
+      ),
+    fats: z
+      .number()
+      .describe(
+        "The total amount of fats in the dish (grams) based on the size"
+      ),
   });
 
   const result = await streamObject({

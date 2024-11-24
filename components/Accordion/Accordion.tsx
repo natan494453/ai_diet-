@@ -62,7 +62,7 @@ export default function Accordion({ locale }: { locale: string }) {
           {filterRecipes?.map((item: recipeTypeEach, index: number) => (
             <div
               key={item._id}
-              className="bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform hover:scale-105 hover:shadow-2xl lg:w-[30vw] w-full h-max"
+              className="bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform  hover:shadow-2xl lg:w-[30vw] w-full h-max"
             >
               {/* Accordion Header with Recipe Title */}
               <div className="flex justify-between items-center p-6 bg-gradient-to-r from-purple-700 via-pink-600 to-red-600 text-white text-xl font-bold">
