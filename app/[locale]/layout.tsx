@@ -32,8 +32,8 @@ export default async function RootLayout({
         <html
           lang={locale}
           dir={locale === "he" ? "rlt" : "ltr"}
-          data-theme="dark"
-          className="page"
+          data-theme="dracula"
+          className="page "
         >
           <body className={inter.className + "relative"}>
             <NavBar />

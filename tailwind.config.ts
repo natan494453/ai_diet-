@@ -20,6 +20,6 @@ const config: Config = {
     },
   },
   plugins: [daisyui],
-  daisyui: { themes: ["dark", "valentine", "light"] },
+  daisyui: { themes: ["dark", "valentine", "light", "dracula"] },
 };
 export default config;
