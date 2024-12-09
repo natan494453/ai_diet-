@@ -9,7 +9,7 @@ import { z } from "zod";
 export async function POST(req: Request) {
   const body = await req.json();
 
-  console.log(body.calories);
+
   const google = createGoogleGenerativeAI({
     apiKey: process.env.GOOGLE_API_KEY,
   });

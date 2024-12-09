@@ -25,6 +25,7 @@ export default function Explain() {
           title={t("cardThree.title")}
           explain={t("cardThree.explain")}
           img="/steps/thing.png"
+          index={2}
         />{" "}
         <Card
           title={t("cardFour.title")}

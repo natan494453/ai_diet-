@@ -106,7 +106,7 @@ export default function Chat({
         : recipe_schema_english_with_calories,
     onFinish(event) {
       addRecipeHandler(event.object as recipeTypes, token);
-      console.log("finsih");
+      
       setIsok(true);
       setTimeout(() => {
         setIsok(false);

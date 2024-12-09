@@ -25,7 +25,7 @@ export default async function RootLayout({
   const { locale } = await params;
 
   const messages = await getMessages();
-  console.log(locale);
+ 
   return (
     <NextIntlClientProvider messages={messages}>
       <ConvexClientProvider leng={locale}>
